@@ -5,7 +5,7 @@ Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
 Version:	2.00pre4
-Release:	1
+Release:	2
 Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-2.00-pre4.tar.gz
 Source1:	quota.sh
 Copyright:	BSD
@@ -46,21 +46,6 @@ i modyfikacji Quoty.
 Kota, sistem yöneticisine, bir kullanýcýnýn ya da kullanýcý grubunun disk
 kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki yazýlýmlar kota
 sistemini kullanmak için gereken kontrol yazýlýmlarýdýr.
-
-%package rquotad
-Summary:	Remote quota server.
-Summary(pl):	Zdalny serwer quota.
-Group:		Networking/Daemons
-Group(pl):	Sieciowe/Serwery
-Requires:	%{name}
-
-%description rquotad
-rquotad is an rpc(3N) server which returns quotas for a user of a local file system which
-is mounted by a remote machine over the NFS. The results are used by quota(1) to display
-user quotas for remote file systems. 
-
-%description -l pl rquotad
-Zdalny serwer quota.
 
 %prep
 %setup -q -n %{name}-2.00-pre4
@@ -107,9 +92,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/quotaon.8*
 %{_mandir}/man8/repquota.8*
 %{_mandir}/man8/setquota.8*
-
-%files rquotad
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_sbindir}/rpc.rquotad
-
-%{_mandir}/man8/*rquotad*
