@@ -15,6 +15,7 @@ Patch0:		quota-Makefile.patch
 Patch1:		quota-man.patch
 Patch2:		quota-rsquash.patch
 Patch3:		quota-sparc.patch
+Patch4:		quota-reiserfs.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -68,6 +69,7 @@ Zdalny serwer quota.
 %patch1 -p2 
 %patch2 -p2 
 #%patch3 -p2 
+#%patch4 -p1
 
 %build
 make OPT="$RPM_OPT_FLAGS"
