@@ -9,21 +9,20 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ
 Name:		quota
-Version:	3.10
-Release:	3
+Version:	3.11
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
-# Source0-md5:	a7e76cb4554e64a07df746ab0d85cc59
+# Source0-md5:	897113033dbd9b72007818c4822b9822
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	05a209bc054366ea190d1c67669f9ca3
 Source2:	r%{name}d.init
 Source3:	r%{name}d.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
-Patch1:		%{name}-pl.po-update.patch
-Patch2:		%{name}-nolibs.patch
+Patch1:		%{name}-nolibs.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
@@ -106,7 +105,6 @@ dla zdalnego systemu plikСw.
 %setup -q -n quota-tools
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %{__aclocal}
