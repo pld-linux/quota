@@ -9,8 +9,8 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ.
 Name:		quota
-Version:	3.06
-Release:	2
+Version:	3.07
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -109,7 +109,7 @@ dla zdalnego systemu plikСw.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}} \
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig}
 
 %{__make} install \
@@ -148,14 +148,7 @@ fi
 %defattr(644,root,root,755)
 %doc doc/{quotas-1.eps,quotas.ms} quotatab
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/warnquota.conf
-%attr(755,root,root) /sbin/*
-%attr(755,root,root) %{_sbindir}/edquota
-%attr(755,root,root) %{_sbindir}/quot
-%attr(755,root,root) %{_sbindir}/quotastats
-%attr(755,root,root) %{_sbindir}/repquota
-%attr(755,root,root) %{_sbindir}/setquota
-%attr(755,root,root) %{_sbindir}/warnquota
-%attr(755,root,root) %{_sbindir}/xqmstats
+%attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
 
 %{_mandir}/man1/*
