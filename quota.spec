@@ -16,15 +16,15 @@ License:	BSD
 Group:		Applications/System
 Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
-Source2:	rquotad.init
-Source3:	rquotad.sysconfig
+Source2:	r%{name}d.init
+Source3:	r%{name}d.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:  gettext-devel
+BuildRequires:	gettext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -148,7 +148,7 @@ fi
 %files -f quota.lang
 %defattr(644,root,root,755)
 %doc doc/{quotas-1.eps,quotas.ms} quotatab
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/warnquota.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/warnquota.conf
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
 
