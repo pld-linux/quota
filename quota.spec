@@ -7,13 +7,14 @@ Summary(pt_BR):	Pacote de administração quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
 Version:	3.01
-Release:	0.pre9.1
+Release:	0.pre9.2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre9.tar.gz
+Source1:	%{name}-non-english-man-pages.tar.bz2
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-Makefile.patch
 Patch1:		%{name}-defaults.patch
@@ -85,7 +86,11 @@ install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
 %{__make} install \
 	ROOTDIR=$RPM_BUILD_ROOT
 
-echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
+echo .so quotaon.8 > $RPM_BUILD_ROOT%{_mandir}/man8/quotaoff.8
+rm -f $RPM_BUILD_ROOT%{_mandir}/man8/*rquotad.8
+
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+rm -f $RPM_BUILD_ROOT%{_mandir}/*/man8/*rquotad.8
 
 gzip -9 doc/{quotas-1.eps,quotas.ms}
 
@@ -108,11 +113,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 
 %{_mandir}/man1/*
-%{_mandir}/man8/convertquota.8*
-%{_mandir}/man8/edquota.8*
-%{_mandir}/man8/quot.8*
-%{_mandir}/man8/quotacheck.8*
-%{_mandir}/man8/quotaon.8*
-%{_mandir}/man8/repquota.8*
-%{_mandir}/man8/setquota.8*
-%{_mandir}/man8/warnquota.8*
+%{_mandir}/man8/*
+
+%lang(fi) %{_mandir}/fi/man1/*
+
+%lang(hu) %{_mandir}/hu/man8/*
+
+%lang(ja) %{_mandir}/ja/man1/*
+%lang(ja) %{_mandir}/ja/man8/*
+
+%lang(pl) %{_mandir}/pl/man1/*
+%lang(pl) %{_mandir}/pl/man8/*
