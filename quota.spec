@@ -23,6 +23,7 @@ Source3:	r%{name}d.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
 Patch1:		%{name}-nolibs.patch
+Patch2:		%{name}-pl.po-update.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
@@ -105,6 +106,7 @@ dla zdalnego systemu plików.
 %setup -q -n quota-tools
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__aclocal}
@@ -174,6 +176,7 @@ fi
 %{_mandir}/man1/*
 %{_mandir}/man8/quot*.8*
 %{_mandir}/man8/*quota.8*
+%{_mandir}/man8/xqmstats.8*
 
 %lang(fi) %{_mandir}/fi/man1/*
 
