@@ -10,7 +10,7 @@ Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ
 Name:		quota
 Version:	3.12
-Release:	1
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
