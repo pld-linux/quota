@@ -86,7 +86,7 @@ install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
 
 echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
-gzip -9 doc/{quota4th.fig,quotas-1.eps,quotas.ms}
+gzip -9 doc/{quotas-1.eps,quotas.ms}
 
 %find_lang quota
 
