@@ -4,21 +4,17 @@ Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	1.70
-Release:	3
-Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-%{version}.tar.gz
+Version:	2.00pre3
+Release:	1
+Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-2.00-pre3.tar.gz
 Source1:	quota.sh
 Copyright:	BSD
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Patch0:		quota-Makefile.patch
-Patch1:		quota-glibc.patch
-Patch2:		quota-man.patch
-Patch3:		quota-dbtob.patch
-Patch4:		quota-rsquash.patch
-Patch5:		quota-sparc.patch
-Patch6:		quota-setquota.patch
-Patch7:		quota-memleak.patch
+Patch1:		quota-man.patch
+Patch2:		quota-rsquash.patch
+Patch3:		quota-sparc.patch
 BuildRequires:	e2fsprogs-devel
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -65,16 +61,12 @@ user quotas for remote file systems.
 Zdalny serwer quota.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-2.00-pre3
 
-%patch0 -p1 -b .pld 
+%patch0 -p1
 %patch1 -p2 
 %patch2 -p2 
-%patch3 -p2 
-%patch4 -p2 
-%patch5 -p2 
-%patch6 -p1
-%patch7 -p1
+#%patch3 -p2 
 
 %build
 make OPT="$RPM_OPT_FLAGS"
@@ -102,6 +94,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/edquota
 %attr(755,root,root) %{_sbindir}/quotastats
 %attr(755,root,root) %{_sbindir}/repquota
+%attr(755,root,root) %{_sbindir}/setquota
+%attr(755,root,root) %{_sbindir}/warnquota
 %attr(755,root,root) %{_bindir}/*
 
 %{_mandir}/man1/*
