@@ -5,20 +5,18 @@ Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
 Version:	3.01
-Release:	0.pre5.1
+Release:	0.pre6.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre5.tar.gz
+Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre6.tar.gz
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-Makefile.patch
-Patch1:		%{name}-man.patch
-Patch2:		%{name}-defaults.patch
-Patch3:		%{name}-fixfree.patch
-Patch4:		%{name}-infinite.patch
-Patch5:		%{name}-libwrap.patch
+Patch1:		%{name}-defaults.patch
+Patch2:		%{name}-fixfree.patch
+Patch3:		%{name}-libwrap.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	autoconf
@@ -58,8 +56,6 @@ yazýlýmlarýdýr.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p2
-%patch5 -p1
 
 %build
 aclocal
