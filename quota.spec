@@ -9,7 +9,7 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Name:		quota
 Version:	3.05
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -122,8 +122,6 @@ echo ".so rquotad.8" >	$RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-gzip -9 doc/{quotas-1.eps,quotas.ms}
-
 %find_lang quota
 
 %clean
@@ -147,7 +145,7 @@ fi
 
 %files -f quota.lang
 %defattr(644,root,root,755)
-%doc doc/*.gz
+%doc doc/{quotas-1.eps,quotas.ms}
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_sbindir}/edquota
 %attr(755,root,root) %{_sbindir}/quot
@@ -159,7 +157,8 @@ fi
 %attr(755,root,root) %{_bindir}/*
 
 %{_mandir}/man1/*
-%{_mandir}/man8/*
+%{_mandir}/man8/quot*.8*
+%{_mandir}/man8/*quota.8*
 
 %lang(fi) %{_mandir}/fi/man1/*
 
