@@ -1,5 +1,5 @@
 --- quota-tools/po/pl.po.orig	2004-02-10 10:47:47.000000000 +0100
-+++ quota-tools/po/pl.po	2004-06-19 20:50:19.622127400 +0200
++++ quota-tools/po/pl.po	2004-12-30 17:02:18.000000000 +0100
 @@ -5,9 +5,9 @@
  #
  msgid ""
@@ -1267,6 +1267,23 @@
  #, c-format
  msgid "Mountpoint (or device) %s not found.\n"
  msgstr "Nie znaleziono punktu montowania (lub urz±dzenia) %s.\n"
+@@ -1703,13 +1737,13 @@
+ 
+ #: repquota.c:245
+ #, c-format
+-msgid "                        Block limits                File limits\n"
++msgid "                         Block limits                 File limits\n"
+ msgstr "                        Limity bloków               Limity plików\n"
+ 
+ #: repquota.c:246
+ #, c-format
+-msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
+-msgstr "%-9s       u¿yw.   miêk.   twar. pob³.    u¿yw. miêk. twar. pob³.\n"
++msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
++msgstr "%-10s       u¿yw.    miêk.    twar. pob³.    u¿yw. miêk. twar. pob³.\n"
+ 
+ #: repquota.c:246
+ msgid "User"
 @@ -1838,12 +1872,13 @@
  msgid "copy_group_quota_limits: Failed to get groupquota for uid %ld : %s\n"
  msgstr "copy_group_quota_limits: nie uda³o siê odczytaæ limitów grupy dla uid %ld : %s\n"
