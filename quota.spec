@@ -146,8 +146,8 @@ fi
 
 %files -f quota.lang
 %defattr(644,root,root,755)
-%doc doc/{quotas-1.eps,quotas.ms}
-%attr(640,root,root)  %config(noreplace) %verify(not size mtime md5) /etc/warnquota.conf
+%doc doc/{quotas-1.eps,quotas.ms} quotatab
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/warnquota.conf
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_sbindir}/edquota
 %attr(755,root,root) %{_sbindir}/quot
