@@ -9,7 +9,7 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Name:		quota
 Version:	3.04
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
