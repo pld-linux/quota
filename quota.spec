@@ -9,7 +9,7 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Name:		quota
 Version:	3.04
-Release:	1
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -20,6 +20,7 @@ Patch0:		%{name}-Makefile.patch
 Patch1:		%{name}-defaults.patch
 Patch2:		%{name}-fixfree.patch
 Patch3:		%{name}-libwrap.patch
+Patch4:		%{name}-man.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	autoconf
@@ -82,6 +83,7 @@ yazЩlЩmlarЩdЩr.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p0
 
 %build
 aclocal
