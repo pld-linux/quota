@@ -67,10 +67,9 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
 
-make \
-    ROOTDIR=$RPM_BUILD_ROOT \
-    mandir=%{_mandir} \
-    install
+make install \
+	ROOTDIR=$RPM_BUILD_ROOT \
+	mandir=%{_mandir}
 
 echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
