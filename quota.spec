@@ -1,3 +1,4 @@
+%define snap	20020426
 Summary:	Quota administration package
 Summary(de):	Quotenverwaltungspaket
 Summary(es):	Paquete de administraciСn cuota
@@ -8,12 +9,12 @@ Summary(ru):	Утилиты системного администратора для управления дисковыми квотами
 Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Name:		quota
-Version:	3.04
-Release:	3
+Version:	3.05
+Release:	0.%{snap}
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
+Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-%{snap}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-Makefile.patch
@@ -25,6 +26,7 @@ BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
+Obsoletes:	quota-tools
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
