@@ -9,13 +9,13 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ
 Name:		quota
-Version:	3.08
+Version:	3.09
 Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
-# Source0-md5:	5897adec872176543d0379c37b5ed6cf
+# Source0-md5:	f723962e0c4783837d9f38f59a748bca
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	05a209bc054366ea190d1c67669f9ca3
 Source2:	r%{name}d.init
@@ -106,7 +106,7 @@ dla zdalnego systemu plikСw.
 %setup -q -n quota-tools
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+%patch2 -p1 -b .orig
 
 %build
 %{__aclocal}
