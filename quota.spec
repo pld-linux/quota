@@ -4,18 +4,15 @@ Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	2.00pre4
-Release:	2
-Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-2.00-pre4.tar.gz
-Source1:	quota.sh
+Version:	2.00pre11
+Release:	1
+Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-2.00-pre11.tar.gz
 Copyright:	BSD
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Patch0:		quota-Makefile.patch
 Patch1:		quota-man.patch
-Patch2:		quota-rsquash.patch
-Patch3:		quota-sparc.patch
-Patch4:		quota-reiserfs.patch
+Patch2:		quota-reiserfs.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -48,16 +45,14 @@ kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki yazýlýmlar kota
 sistemini kullanmak için gereken kontrol yazýlýmlarýdýr.
 
 %prep
-%setup -q -n %{name}-2.00-pre4
-
-%patch0 -p1
+%setup -q -n %{name}-2.00-pre11
+%patch0 -p1 
 %patch1 -p2 
-%patch2 -p2 
-#%patch3 -p2 
-#%patch4 -p1
+%patch2 -p1
 
 %build
-%{__make} OPT="$RPM_OPT_FLAGS"
+%configure
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -65,19 +60,20 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
 
 %{__make} install \
-	ROOTDIR=$RPM_BUILD_ROOT \
-	mandir=%{_mandir}
+	ROOTDIR=$RPM_BUILD_ROOT
 
 echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[18]/*
+gzip -9 doc/{quota4th.fig,quotas-1.eps,quotas.ms}
+
+%find_lang quota
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f quota.lang
 %defattr(644,root,root,755)
-
+%doc doc/*.gz
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_sbindir}/edquota
 %attr(755,root,root) %{_sbindir}/quotastats
