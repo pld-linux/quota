@@ -8,18 +8,15 @@ Summary(ru):	Утилиты системного администратора для управления дисковыми квотами
 Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Name:		quota
-Version:	3.04
-Release:	4
+Version:	3.05
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 URL:		http://sourceforge.net/projects/linuxquota/
-Patch0:		%{name}-Makefile.patch
-Patch1:		%{name}-defaults.patch
-Patch2:		%{name}-libwrap.patch
-Patch3:		%{name}-man.patch
+Patch0:		%{name}-defaults.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	autoconf
@@ -79,9 +76,6 @@ yazЩlЩmlarЩdЩr.
 %prep
 %setup -q -n quota-tools
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p0
 
 %build
 aclocal
