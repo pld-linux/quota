@@ -10,7 +10,7 @@ Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ.
 Name:		quota
 Version:	3.06
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -22,6 +22,7 @@ Source2:	rquotad.init
 Source3:	rquotad.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
+Patch1:		%{name}-po.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	autoconf
@@ -102,6 +103,7 @@ dla zdalnego systemu plikСw.
 %prep
 %setup -q -n quota-tools
 %patch0 -p1
+%patch1 -p1
 
 %build
 aclocal
