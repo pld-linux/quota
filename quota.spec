@@ -4,20 +4,19 @@ Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	2.00
-Release:	1
+Version:	3.01
+Release:	0.pre5.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-%{version}.tar.gz
+Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre5.tar.gz
 Patch0:		%{name}-Makefile.patch
 Patch1:		%{name}-man.patch
-Patch2:		%{name}-reiserfs.patch
-Patch3:		%{name}-defaults.patch
-Patch4:		%{name}-fixfree.patch
-Patch5:		%{name}-fixman.patch
+Patch2:		%{name}-defaults.patch
+Patch3:		%{name}-fixfree.patch
+Patch4:		%{name}-infinite.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -51,13 +50,12 @@ yazýlýmlar kota sistemini kullanmak için gereken kontrol
 yazýlýmlarýdýr.
 
 %prep
-%setup -q
+%setup -q -n quota-tools
 %patch0 -p1
-%patch1 -p2
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%patch4 -p2
 
 %build
 %configure
@@ -84,15 +82,20 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/*.gz
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_sbindir}/edquota
+%attr(755,root,root) %{_sbindir}/quot
 %attr(755,root,root) %{_sbindir}/quotastats
 %attr(755,root,root) %{_sbindir}/repquota
 %attr(755,root,root) %{_sbindir}/setquota
 %attr(755,root,root) %{_sbindir}/warnquota
+%attr(755,root,root) %{_sbindir}/xqmstats
 %attr(755,root,root) %{_bindir}/*
 
 %{_mandir}/man1/*
+%{_mandir}/man8/convertquota.8*
 %{_mandir}/man8/edquota.8*
+%{_mandir}/man8/quot.8*
 %{_mandir}/man8/quotacheck.8*
 %{_mandir}/man8/quotaon.8*
 %{_mandir}/man8/repquota.8*
 %{_mandir}/man8/setquota.8*
+%{_mandir}/man8/warnquota.8*
