@@ -9,22 +9,24 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	õÔÉÌ¦ÔÉ ÓÉÓÔÅÍÎÏÇÏ ÁÄÍ¦Î¦ÓÔÒÁÔÏÒÁ ÄÌÑ ËÅÒÕ×ÁÎÎÑ ÄÉÓËÏ×ÉÍÉ Ë×ÏÔÁÍÉ
 Summary(zh_CN):	´ÅÅÌÊ¹ÓÃÇé¿öµÄ¼à¿Ø¹¤¾ß
 Name:		quota
-Version:	3.07
+Version:	3.08
 Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/linuxquota/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	r%{name}d.init
 Source3:	r%{name}d.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
-BuildRequires:	e2fsprogs-devel
-BuildRequires:	libwrap-devel
+Patch1:		%{name}-missing-nls.patch
+Patch2:		%{name}-pl.po-update.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	e2fsprogs-devel
 BuildRequires:	gettext-devel
+BuildRequires:	libwrap-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -81,8 +83,8 @@ yazýlýmlarýdýr.
 Summary:	Remote quota server
 Summary(pl):	Zdalny serwer quota
 Group:		Networking/Daemons
-Prereq:		rc-scripts
-Prereq:		/sbin/chkconfig
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	portmap >= 4.0
 Obsoletes:	nfs-utils-rquotad
 
@@ -101,6 +103,8 @@ dla zdalnego systemu plików.
 %prep
 %setup -q -n quota-tools
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %{__aclocal}
@@ -111,7 +115,7 @@ dla zdalnego systemu plików.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}} \
-	$RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig}
+	$RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
 
 %{__make} install \
 	ROOTDIR=$RPM_BUILD_ROOT
@@ -148,6 +152,8 @@ fi
 %files -f quota.lang
 %defattr(644,root,root,755)
 %doc doc/{quotas-1.eps,quotas.ms} quotatab
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/quotagrpadmins
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/quotatab
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/warnquota.conf
 %attr(755,root,root) %{_sbindir}/*
 %attr(755,root,root) %{_bindir}/*
