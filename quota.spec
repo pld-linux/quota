@@ -5,7 +5,7 @@ Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
 Version:	3.01
-Release:	0.pre7.1
+Release:	0.pre9.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
