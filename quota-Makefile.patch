@@ -1,18 +1,14 @@
---- quota/Makefile.std.pld	Sat Jun 13 11:37:52 1998
-+++ quota/Makefile.std	Thu Sep 16 18:58:34 1999
-@@ -1,18 +1,21 @@
--PROGS         = quotacheck quotaon quota repquota warnquota quotastats edquota setquota #rpc.rquotad 
--CFLAGS       += -O3 -fexpensive-optimizations -fstrength-reduce #-DRPC -DEXT2_DIRECT
--EXT2LIBS      = #-lext2fs -lcom_err
--BSDLIBS       = -lbsd
-+PROGS         = quotacheck quotaon quota repquota warnquota quotastats edquota setquota rpc.rquotad 
+--- quota-2.00-pre3/Makefile~	Tue Oct  5 20:55:30 1999
++++ quota-2.00-pre3/Makefile	Fri Nov 26 20:09:09 1999
+@@ -1,5 +1,6 @@
+ PROGS         = quotacheck quotaon quota repquota warnquota quotastats edquota setquota rpc.rquotad 
+-CFLAGS       += -I. -O3 -fexpensive-optimizations -fstrength-reduce -DRPC #-DALT_FORMAT -DRPC_SETQUOTA -DEXT2_DIRECT
 +OPT	      = -O2
-+CFLAGS       += $(OPT) -DRPC -DEXT2_DIRECT -I.
-+EXT2LIBS      = -lext2fs -lcom_err
-+BSDLIBS       = 
++CFLAGS       += $(OPT) -DRPC -DEXT2_DIRECT -I. #-DALT_FORMAT -DRPC_SETQUOTA
+ EXT2LIBS      = -lext2fs -lcom_err
  RPCSRC        = rquota.h rquota_xdr.c rquota_clnt.c
- VERSIONDEF    = -DQUOTA_VERSION=\"1.70\"
- LDFLAGS       = -s
+ VERSIONDEF    = -DQUOTA_VERSION=\"2.00\"
+@@ -20,13 +21,15 @@
  INSTALL       = install
  ROOTDIR       =
  SUPER_OWNER   = root
@@ -21,15 +17,17 @@
 +BIN_OWNER     = root
 +BIN_GROUP     = root
  DEF_SUID_MODE = 4511
+ DEF_BIN_MODE = 555
  DEF_SBIN_MODE = 555
  DEF_MAN_MODE  = 444
+ RPCGEN        = rpcgen
 +LN	      = ln -sf
 +mandir		= /usr/share/man
  
  all: $(PROGS)
  
-@@ -23,18 +26,16 @@
- 	-rm -f core *.o $(PROGS)
+@@ -40,18 +43,17 @@
+ 	-rm -f core *.o $(PROGS) $(RPCSRC)
  
  install: all 
 -	-$(INSTALL) -o $(BIN_OWNER) -g $(BIN_GROUP) -m $(DEF_SBIN_MODE) \
@@ -37,21 +35,21 @@
  	quotacheck quotaon $(ROOTDIR)/sbin
  	$(LN) quotaon $(ROOTDIR)/sbin/quotaoff
 -	-$(INSTALL) -o $(BIN_OWNER) -g $(BIN_GROUP) -m $(DEF_SBIN_MODE) \
--	edquota repquota warnquota quotastats setquota $(ROOTDIR)/usr/sbin
++	-$(INSTALL) -m $(DEF_SBIN_MODE) \
+ 	edquota repquota warnquota quotastats setquota $(ROOTDIR)/usr/sbin
 -	chown $(BIN_OWNER).$(BIN_GROUP) $(ROOTDIR)/sbin/quotaoff
--	-$(INSTALL) -s -o $(BIN_OWNER) -g root -m 644 rquota.h rquota.x $(ROOTDIR)/usr/include/rpcsvc
--	-$(INSTALL) -s -o $(SUPER_OWNER) -g $(BIN_GROUP) -m $(DEF_BIN_MODE) quota $(ROOTDIR)/usr/sbin
+-	-$(INSTALL) -o $(BIN_OWNER) -g $(BIN_GROUP) -m 644 rquota.h rquota.x $(ROOTDIR)/usr/include/rpcsvc
+-	-$(INSTALL) -s -o $(SUPER_OWNER) -g $(BIN_GROUP) -m $(DEF_BIN_MODE) quota rpc.rquotad $(ROOTDIR)/usr/sbin
 -	-$(INSTALL) -o $(BIN_OWNER) -g $(BIN_GROUP) -m $(DEF_MAN_MODE) *.1 $(ROOTDIR)/usr/man/man1
 -	-$(INSTALL) -o $(BIN_OWNER) -g $(BIN_GROUP) -m $(DEF_MAN_MODE) *.2 $(ROOTDIR)/usr/man/man2
 -	-$(INSTALL) -o $(BIN_OWNER) -g $(BIN_GROUP) -m $(DEF_MAN_MODE) *.3 $(ROOTDIR)/usr/man/man3
 -	-$(INSTALL) -o $(BIN_OWNER) -g $(BIN_GROUP) -m $(DEF_MAN_MODE) *.8 $(ROOTDIR)/usr/man/man8
-+	-$(INSTALL) -m $(DEF_SBIN_MODE) \
-+	edquota repquota warnquota quotastats rpc.rquotad $(ROOTDIR)/usr/sbin
-+	-$(INSTALL) -m $(DEF_SBIN_MODE) quota $(ROOTDIR)/usr/bin
-+	-$(INSTALL) -m $(DEF_SBIN_MODE) *.1 $(ROOTDIR)$(mandir)/man1
-+	-$(INSTALL) -m $(DEF_SBIN_MODE) *.2 $(ROOTDIR)$(mandir)/man2
-+	-$(INSTALL) -m $(DEF_SBIN_MODE) *.3 $(ROOTDIR)$(mandir)/man3
-+	-$(INSTALL) -m $(DEF_SBIN_MODE) *.8 $(ROOTDIR)$(mandir)/man8
++	-$(INSTALL) -m $(DEF_BIN_MODE) quota $(ROOTDIR)/usr/bin
++	-$(INSTALL) -m $(DEF_BIN_MODE) rpc.rquotad $(ROOTDIR)/usr/sbin
++	-$(INSTALL) -m $(DEF_MAN_MODE) *.1 $(ROOTDIR)$(mandir)/man1
++	-$(INSTALL) -m $(DEF_MAN_MODE) *.2 $(ROOTDIR)$(mandir)/man2
++	-$(INSTALL) -m $(DEF_MAN_MODE) *.3 $(ROOTDIR)$(mandir)/man3
++	-$(INSTALL) -m $(DEF_MAN_MODE) *.8 $(ROOTDIR)$(mandir)/man8
  
  quotaon: quotaon.o quotactl.o hasquota.o
  	$(CC) $(LDFLAGS) -o $@ quotaon.o quotactl.o hasquota.o
