@@ -48,6 +48,20 @@ Kota, sistem yöneticisine, bir kullanýcýnýn ya da kullanýcý grubunun disk
 kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki yazýlýmlar kota
 sistemini kullanmak için gereken kontrol yazýlýmlarýdýr.
 
+%package rquotad
+Summary:	Remote quota server.
+Summary(pl):	Zdalny serwer quota.
+Group:		Networking/Daemons
+Group(pl):	Sieciowe/Serwery
+
+%description rquotad
+rquotad is an rpc(3N) server which returns quotas for a user of a local file system which
+is mounted by a remote machine over the NFS. The results are used by quota(1) to display
+user quotas for remote file systems. 
+
+%description -l pl rquotad
+Zdalny serwer quota.
+
 %prep
 %setup -q -n %{name}
 
@@ -82,7 +96,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 
 %attr(755,root,root) /sbin/*
-%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_sbindir}/edquota
+%attr(755,root,root) %{_sbindir}/quotastats
+%attr(755,root,root) %{_sbindir}/repquota
 %attr(755,root,root) %{_bindir}/*
 
-%{_mandir}/man[18]/*
+%{_mandir}/man1/*
+%{_mandir}/man8/edquota.8*
+%{_mandir}/man8/quotacheck.8*
+%{_mandir}/man8/quotaon.8*
+%{_mandir}/man8/repquota.8*
+%{_mandir}/man8/setquota.8*
+
+%files rquotad
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/rpc.rquotad
+
+%{_mandir}/man8/*rquotad*
