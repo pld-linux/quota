@@ -10,7 +10,7 @@ Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ
 Name:		quota
 Version:	3.10
-Release:	1
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -29,6 +29,8 @@ BuildRequires:	e2fsprogs-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libwrap-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_sbindir	/sbin
 
 %description
 Quotas allow the system administrator to limit disk usage by a user
@@ -118,6 +120,8 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}} \
 	$RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
 
 %{__make} install \
+	sbindir=%{_sbindir} \
+	bindir=%{_bindir} \
 	ROOTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/rquotad
