@@ -72,14 +72,14 @@ Zdalny serwer quota.
 #%patch4 -p1
 
 %build
-make OPT="$RPM_OPT_FLAGS"
+%{__make} OPT="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
 
-make install \
+%{__make} install \
 	ROOTDIR=$RPM_BUILD_ROOT \
 	mandir=%{_mandir}
 
