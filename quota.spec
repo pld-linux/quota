@@ -4,9 +4,9 @@ Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	2.00pre3
+Version:	2.00pre4
 Release:	1
-Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-2.00-pre3.tar.gz
+Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-2.00-pre4.tar.gz
 Source1:	quota.sh
 Copyright:	BSD
 Group:		Utilities/System
@@ -62,7 +62,7 @@ user quotas for remote file systems.
 Zdalny serwer quota.
 
 %prep
-%setup -q -n %{name}-2.00-pre3
+%setup -q -n %{name}-2.00-pre4
 
 %patch0 -p1
 %patch1 -p2 
