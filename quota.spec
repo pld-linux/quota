@@ -57,7 +57,7 @@ fichiers. Ce paquetage contient les outils nécessaires à la mise en
 place, la modification et la mise à jour des quotas.
 
 %description -l pl
-Quota pozwala administaratorowi systemu na ograniczanie wielko¶ci
+Quota pozwala administratorowi systemu na ograniczanie wielko¶ci
 miejsca na dysku dla u¿ytkownika/grupy. Pakiet ten zawiera narzêdzia
 do aktywacji i modyfikacji Quoty.
 
