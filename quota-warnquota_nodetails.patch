@@ -1,0 +1,67 @@
+--- quota-tools/warnquota.c.orig	Thu Oct  2 13:53:57 2003
++++ quota-tools/warnquota.c	Thu Oct  2 14:02:41 2003
+@@ -76,6 +76,7 @@
+ #define FL_USER 1
+ #define FL_GROUP 2
+ #define FL_NOAUTOFS 4
++#define FL_NODETAILS 8
+ 
+ struct usage {
+ 	char *devicename;
+@@ -255,7 +256,7 @@
+ 		else
+ 			fprintf(fp, DEF_GROUP_MESSAGE, offender->offender_name);
+ 
+-	for (lptr = offender->usage; lptr; lptr = lptr->next) {
++	for (lptr = offender->usage; !(flags & FL_NODETAILS) && lptr; lptr = lptr->next) {
+ 		dqb = &lptr->dq_dqb;
+ 		for (cnt = 0; cnt < qtab_i; cnt++)
+ 			if (!strcmp(quotatable[cnt].devname, lptr->devicename)) {
+@@ -599,14 +600,14 @@
+ /* Print usage information */
+ static void usage(void)
+ {
+-	errstr(_("Usage:\n  warnquota [-ugi] [-F quotaformat] [-c configfile] [-q quotatabfile]\n"));
++	errstr(_("Usage:\n  warnquota [-ugid] [-F quotaformat] [-c configfile] [-q quotatabfile]\n"));
+ }
+  
+ static void parse_options(int argcnt, char **argstr)
+ {
+ 	int ret;
+  
+-	while ((ret = getopt(argcnt, argstr, "ugVF:hc:q:a:i")) != -1) {
++	while ((ret = getopt(argcnt, argstr, "ugVF:hc:q:a:id")) != -1) {
+ 		switch (ret) {
+ 		  case '?':
+ 		  case 'h':
+@@ -636,6 +637,9 @@
+ 		  case 'i':
+ 			flags |= FL_NOAUTOFS;
+ 			break;
++		  case 'd':
++			flags |= FL_NODETAILS;
++			break;
+ 		}
+ 	}
+ 	if (!(flags & FL_USER) && !(flags & FL_GROUP))
+--- quota-tools/warnquota.8.orig	Thu Oct  2 14:55:45 2003
++++ quota-tools/warnquota.8	Thu Oct  2 14:58:05 2003
+@@ -4,7 +4,7 @@
+ .SH SYNOPSIS
+ .B warnquota
+ [
+-.B \-ugi
++.B \-ugid
+ ] [
+ .B \-F
+ .I quotaformat
+@@ -67,6 +67,9 @@
+ .TP
+ .B \-i
+ ignore mountpoints mounted by automounter.
++.TP
++.B -d
++don't attach quota report in email.
+ .SH FILES
+ .PD 0
+ .TP 20
