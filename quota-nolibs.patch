@@ -1,0 +1,10 @@
+--- quota-tools/configure.in.orig	2003-10-13 09:17:56.000000000 +0200
++++ quota-tools/configure.in	2004-01-29 20:04:21.131517728 +0100
+@@ -52,7 +52,6 @@
+ fi
+ AC_SUBST(EXT2LIBS)
+ 
+-AC_CHECK_LIB(nsl, main)
+ AC_CACHE_VAL(ac_cv_lib_wrap_main,
+ 	saved_LIBS="$LIBS"
+ 	LIBS="$LIBS -lwrap"
