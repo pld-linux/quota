@@ -68,7 +68,7 @@ cd utils
 make ROOTDIR=$RPM_BUILD_ROOT BIN_GROUP=`id -g` SUPER_OWNER=`id -u` \
     BIN_OWNER=`id -u` install
 
-mv $RPM_BUILD_ROOT/usr/sbin/quota $RPM_BUILD_ROOT/usr/bin/quota
+mv $RPM_BUILD_ROOT/usr/sbin/quota $RPM_BUILD_ROOT%{_bindir}/quota
 
 echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
@@ -83,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/quotacheck
 %attr(755,root,root) /sbin/quotaon
 %attr(755,root,root) /sbin/quotaoff
-%attr(755,root,root) /usr/bin/quota
+%attr(755,root,root) %{_bindir}/quota
 %attr(755,root,root) /usr/sbin/edquota
 %attr(755,root,root) /usr/sbin/repquota
 %attr(755,root,root) /usr/sbin/warnquota
@@ -127,4 +127,4 @@ rm -rf $RPM_BUILD_ROOT
 - built against glibc
 
 * Tue Mar 25 1997 Erik Troan <ewt@redhat.com>
-- Moved /usr/sbin/quota to /usr/bin/quota
+- Moved /usr/sbin/quota to %{_bindir}/quota
