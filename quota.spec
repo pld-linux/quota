@@ -14,7 +14,7 @@ Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/linuxquota/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	r%{name}d.init
 Source3:	r%{name}d.sysconfig
