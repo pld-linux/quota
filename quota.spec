@@ -16,6 +16,7 @@ Patch1:		quota-man.patch
 Patch2:		quota-rsquash.patch
 Patch3:		quota-sparc.patch
 BuildRequires:	e2fsprogs-devel
+BuildRequires:	libwrap-devel
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
