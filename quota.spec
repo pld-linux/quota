@@ -53,6 +53,7 @@ Summary:	Remote quota server.
 Summary(pl):	Zdalny serwer quota.
 Group:		Networking/Daemons
 Group(pl):	Sieciowe/Serwery
+Requires:	%{name}
 
 %description rquotad
 rquotad is an rpc(3N) server which returns quotas for a user of a local file system which
