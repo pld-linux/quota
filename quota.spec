@@ -4,19 +4,20 @@ Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	1.55
-Release:	11d
+Version:	1.66
+Release:	1
 URL:		ftp://sunsite.unc.edu/pub/Linux/system/Admin
 Source0:	%{name}-%{version}.tar.gz
 Source1:	%{name}.sh
 Copyright:	BSD
 Group:		Utilities/System
-Group(pl):	U¿ytki/System
-Patch0:		%{name}-misc.patch
+Group(pl):	Narzêdzia/System
+Patch0:		%{name}-Makefile.patch
 Patch1:		%{name}-glibc.patch
-Patch2:		%{name}-nfs.patch
+Patch2:		%{name}-man.patch
 Patch3:		%{name}-dbtob.patch
-Buildroot:	/tmp/%{name}-%{version}-%{release}-root
+BuildPrereq:	e2fsprogs-static
+Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
 Quotas allow the system administrator to limit disk usage by a user and/or
@@ -62,17 +63,19 @@ make OPT="$RPM_OPT_FLAGS"
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{sbin,usr/{bin,sbin,man/{man1,man2,man3,man8}}}
+install -d $RPM_BUILD_ROOT/{sbin,usr/{bin,sbin,share/man/{man{1,2,3,8}}}}
 
 cd utils
-make ROOTDIR=$RPM_BUILD_ROOT BIN_GROUP=`id -g` SUPER_OWNER=`id -u` \
-    BIN_OWNER=`id -u` install
-
-mv $RPM_BUILD_ROOT%{_sbindir}/quota $RPM_BUILD_ROOT%{_bindir}/quota
+make \
+    ROOTDIR=$RPM_BUILD_ROOT \
+    BIN_GROUP=`id -g` \
+    SUPER_OWNER=`id -u` \
+    BIN_OWNER=`id -u` \
+    install
 
 echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
-bzip2 -9 $RPM_BUILD_ROOT%{_mandir}/man[1238]/*
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[18]/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -80,19 +83,19 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 
-%attr(755,root,root) /sbin/quotacheck
-%attr(755,root,root) /sbin/quotaon
-%attr(755,root,root) /sbin/quotaoff
-%attr(755,root,root) %{_bindir}/quota
-%attr(755,root,root) %{_sbindir}/edquota
-%attr(755,root,root) %{_sbindir}/repquota
-%attr(755,root,root) %{_sbindir}/warnquota
-%attr(755,root,root) %{_sbindir}/quotastats
-%attr(750,root,root) %{_sbindir}/rpc.rquotad
+%attr(755,root,root) /sbin/*
+%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_bindir}/*
 
-%{_mandir}/man[1238]/*
+%{_mandir}/man[18]/*
 
 %changelog
+* Fri May 21 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [1.66-1]
+- removed old patches (prepared new ;)
+- added patch against glibc,
+- more macros && FHS 2.0.
+
 * Tue Jan 26 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [1.55-11d]
 - rebuild on linux-2.2.0,
@@ -107,24 +110,5 @@ rm -rf $RPM_BUILD_ROOT
 - fixed files permisions,
 - removed all patches and added quota.patch,
 - changed quota-1.55.spec to quota.spec,
-- build from non root's account.
-
-* Thu May 07 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Thu Apr 30 1998 Cristian Gafton <gafton@redhat.com>
-- removed patch for mntent
-
-* Tue Jan 13 1998 Erik Troan <ewt@redhat.com>
-- builds rquotad
-- installs rpc.rquotad.8 symlink
-
-* Mon Oct 20 1997 Erik Troan <ewt@redhat.com>
-- removed %{_includedir}/rpcsvc/* from filelist
-- uses a buildroot and %attr
-
-* Thu Jun 19 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
-
-* Tue Mar 25 1997 Erik Troan <ewt@redhat.com>
-- Moved %{_sbindir}/quota to %{_bindir}/quota
+- build from non root's account,
+- start at RH spec.
