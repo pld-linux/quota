@@ -8,8 +8,8 @@ Summary(ru):	Утилиты системного администратора для управления дисковыми квотами
 Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Name:		quota
-Version:	3.05
-Release:	4
+Version:	3.06
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -19,7 +19,6 @@ Source2:	rquotad.init
 Source3:	rquotad.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
-Patch1:		%{name}-cvs-fixes.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	autoconf
@@ -100,7 +99,6 @@ dla zdalnego systemu plikСw.
 %prep
 %setup -q -n quota-tools
 %patch0 -p1
-%patch1 -p1
 
 %build
 aclocal
@@ -148,6 +146,7 @@ fi
 %files -f quota.lang
 %defattr(644,root,root,755)
 %doc doc/{quotas-1.eps,quotas.ms}
+%attr(640,root,root)  %config(noreplace) %verify(not size mtime md5) /etc/warnquota.conf
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_sbindir}/edquota
 %attr(755,root,root) %{_sbindir}/quot
