@@ -5,7 +5,7 @@ Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
 Version:	1.70
-Release:	1
+Release:	2
 Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-%{version}.tar.gz
 Source1:	quota.sh
 Copyright:	BSD
