@@ -12,7 +12,7 @@ Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ
 Name:		quota
 Version:	3.12
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -26,6 +26,7 @@ URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
 Patch1:		%{name}-nolibs.patch
 Patch2:		%{name}-pl.po-update.patch
+Patch3:		%{name}-repquota-len-fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
@@ -109,6 +110,7 @@ dla zdalnego systemu plikСw.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__aclocal}
