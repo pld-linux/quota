@@ -1,7 +1,9 @@
 Summary:	Quota administration package
 Summary(de):	Quotenverwaltungspaket 
+Summary(es):	Paquete de administración cuota
 Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
+Summary(pt_BR):	Pacote de administração quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
 Version:	3.01
@@ -33,6 +35,12 @@ durch einen Anwender und/oder Gruppen pro Dateisystem zu beschränken.
 Es enthält die Tools, die zur Aktivierung, Modifikation und zum
 Aktualisieren von Quoten erforderlich sind."
 
+%description -l es
+Cuotas permite al administrador del sistema limitar el uso de disco
+por un usuario y/o grupo por sistema de archivos. Este paquete
+contiene las herramientas que son necesarias para activar, modificar y
+actualizar cuotas.
+
 %description -l fr
 Les quotas permettant à l'administrateur système de limiter
 l'utilisation disque par un utilisateur et/ou un groupe par système de
@@ -43,6 +51,12 @@ place, la modification et la mise à jour des quotas.
 Quota pozwala administaratorowi systemu na ograniczanie wielko¶ci
 miejsca na dysku dla u¿ytkownika/grupy. Pakiet ten zawiera narzêdzia
 do aktywacji i modyfikacji Quoty.
+
+%description -l pt_BR
+Quotas permite ao administrador do sistema limitar o uso de disco por
+um usuário e/ou grupo por sistema de arquivos. Este pacote contém as
+ferramentas que são necessárias para ativar, modificar e atualizar
+quotas.
 
 %description -l tr
 Kota, sistem yöneticisine, bir kullanýcýnýn ya da kullanýcý grubunun
