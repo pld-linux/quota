@@ -1,6 +1,6 @@
-diff -urN quota-tools.org/Changelog quota-tools/Changelog
---- quota-tools.org/Changelog	Fri May 31 18:01:16 2002
-+++ quota-tools/Changelog	Fri May 31 17:59:37 2002
+diff -urN quota-tools.org/quota.c quota-tools/quota.c
+--- quota-tools.org/quota.c	Fri May 31 18:01:16 2002
++++ quota-tools/quota.c	Fri May 31 17:59:37 2002
 @@ -173,7 +173,7 @@
  			iover = 1;
  		}
