@@ -1,0 +1,12 @@
+diff -ur quota-tools.org/Makefile.in quota-tools/Makefile.in
+--- quota-tools.org/Makefile.in	Fri Feb 22 15:59:33 2002
++++ quota-tools/Makefile.in	Wed Apr 10 17:41:41 2002
+@@ -65,7 +65,7 @@
+ 	done
+ 
+ inst_mo: mo
+-	mkdir -p $(locale_dir)
++	mkdir -p $(ROOTDIR)$(locale_dir)
+ 	for n in $(shell ls po/*.po | sed 's/\.po/\.mo/'); do \
+ 	l=`basename $$n .mo`; \
+ 	$(INSTALL) -m 755 -d $(ROOTDIR)$(locale_dir)/$$l; \

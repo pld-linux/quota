@@ -1,0 +1,26 @@
+--- quota-2.00-pre11/mntent.h~	Sun Sep 10 20:50:53 2000
++++ quota-2.00-pre11/mntent.h	Wed Oct 25 02:51:29 2000
+@@ -22,7 +22,7 @@
+ #define MNTTYPE_PROC		"proc"		/* Linux process file system */
+ #define MNTTYPE_IGNORE		"ignore"	/* Ignore this entry */
+ #define MNTTYPE_SWAP		"swap"		/* Swap device */
+-#define MNTTYPE_REISER		"reiser"	/* Reiser file system */
++#define MNTTYPE_REISER		"reiserfs"	/* Reiser file system */
+ #define MNTTYPE_UFS		"ufs"		/* UNIX file system */
+ #define MNTTYPE_UDF		"udf"		/* OSTA UDF file system */
+ 
+@@ -49,6 +49,14 @@
+ #define	MNTOPT_RESUID		"resuid"	/* user to consider like root for reserved blocks */
+ #define	MNTOPT_SB		"sb"		/* set used super block */
+ #define	MNTOPT_SYSVGROUPS	"sysvgroups"	/* set SYSV group usage */
++
++/* reiserfs specific options */
++#define MNTOPT_NOTAIL		"notail"
++#define MNTOPT_NOLOG		"nolog"
++#define MNTOPT_REPLAYONLY	"replayonly"
++#define MNTOPT_RESIZE		"resize"
++#define MNTOPT_HASH		"hash"
++#define MNTOPT_QCACHE		"qcache"
+ 
+ /* options common to hpfs, isofs, and msdos */
+ #define	MNTOPT_CONV		"conv"		/* convert specified types of data */

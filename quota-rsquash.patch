@@ -1,0 +1,18 @@
+--- quota-1.66/utils/quotaon.c.rsquash	Thu Dec 17 13:53:55 1998
++++ quota-1.66/utils/quotaon.c	Thu Dec 17 13:55:13 1998
+@@ -191,6 +191,7 @@
+    int mode;
+ 
+    mode = (offmode) ? 0 : 1;
++#if defined(Q_RSQUASH)
+    if (quotactl(QCMD(Q_RSQUASH, type), mnt->mnt_fsname, 0, (caddr_t) &mode) < 0) {
+       fprintf(stderr, "quotaon: set root_squash on");
+       perror(mnt->mnt_fsname);
+@@ -199,6 +200,7 @@
+    if (vflag)
+       printf("%s: %s root_squash turned %s\n", mnt->mnt_fsname,
+              qfextension[type], offmode ? "off" : "on");
++#endif
+    return (0);
+ }
+ #endif
