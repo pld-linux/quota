@@ -1,15 +1,7 @@
---- quota-2.00-pre11/Makefile.in~	Sun Sep 10 21:14:21 2000
-+++ quota-2.00-pre11/Makefile.in	Wed Oct 25 03:05:18 2000
-@@ -31,7 +31,7 @@
- prefix        = @prefix@
- bindir        = $(prefix)/bin
- sbindir       = $(prefix)/sbin
--mandir        = $(prefix)/man
-+mandir        = $(prefix)/share/man
- includedir    = $(prefix)/include
- root_sbindir  = /sbin
- locale_dir    = $(prefix)/share/locale
-@@ -56,19 +56,18 @@
+diff -ur quota-tools.orig/Makefile.in quota-tools/Makefile.in
+--- quota-tools.orig/Makefile.in	Tue May  1 21:03:43 2001
++++ quota-tools/Makefile.in	Wed May  2 22:51:23 2001
+@@ -64,7 +64,7 @@
  	done
  
  inst_mo: mo
@@ -17,19 +9,12 @@
 +	mkdir -p $(ROOTDIR)$(locale_dir)
  	for n in $(shell ls po/*.po | sed 's/\.po/\.mo/'); do \
  	l=`basename $$n .mo`; \
--	$(INSTALL) -m 755 -d $(locale_dir)/$$l; \
--	$(INSTALL) -m 755 -d $(locale_dir)/$$l/LC_MESSAGES; \
--	$(INSTALL) -m 644 $$n $(locale_dir)/$$l/LC_MESSAGES/quota.mo; \
-+	$(INSTALL) -m 755 -d $(ROOTDIR)$(locale_dir)/$$l; \
-+	$(INSTALL) -m 755 -d $(ROOTDIR)$(locale_dir)/$$l/LC_MESSAGES; \
-+	$(INSTALL) -m 644 $$n $(ROOTDIR)$(locale_dir)/$$l/LC_MESSAGES/quota.mo; \
- 	done
- 
- install: all inst_mo
+ 	$(INSTALL) -m 755 -d $(ROOTDIR)$(locale_dir)/$$l; \
+@@ -76,7 +76,6 @@
  	-$(INSTALL) -m $(DEF_SBIN_MODE) \
- 	quotacheck quotaon $(ROOTDIR)$(root_sbindir)
+ 	quotacheck quotaon convertquota $(ROOTDIR)$(root_sbindir)
  	$(LN) quotaon $(ROOTDIR)$(root_sbindir)/quotaoff
--	chown -h $(BIN_OWNER):$(BIN_GROUP) $(root_sbindir)/quotaoff
+-	chown -h $(BIN_OWNER):$(BIN_GROUP) $(ROOTDIR)$(root_sbindir)/quotaoff
  	-$(INSTALL) -m $(DEF_SBIN_MODE) \
- 	edquota repquota warnquota quotastats setquota $(ROOTDIR)$(sbindir)
- 	-$(INSTALL) -m 644 rquota.h rquota.x $(ROOTDIR)$(includedir)/rpcsvc
+ 	edquota repquota warnquota quotastats setquota quot xqmstats \
+ 	$(ROOTDIR)$(sbindir)
