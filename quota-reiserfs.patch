@@ -1,0 +1,38 @@
+diff -ur quota-2.00-pre4.orig/hasquota.c quota-2.00-pre4/hasquota.c
+--- quota-2.00-pre4.orig/hasquota.c	Sat Jan 29 10:06:10 2000
++++ quota-2.00-pre4/hasquota.c	Sat May 27 00:37:38 2000
+@@ -28,7 +28,7 @@
+ #define min(x,y) ((x) < (y)) ? (x) : (y)
+ 
+ #define CORRECT_FSTYPE(type) \
+-(!strcmp(type,MNTTYPE_EXT2))
++(!strcmp(type,MNTTYPE_EXT2) || !strcmp(type,MNTTYPE_REISERFS))
+ 
+ char *qfextension[] = INITQFNAMES;
+ static char *qfname = QUOTAFILENAME;
+diff -ur quota-2.00-pre4.orig/mntent.h quota-2.00-pre4/mntent.h
+--- quota-2.00-pre4.orig/mntent.h	Sat Jan 29 10:06:10 2000
++++ quota-2.00-pre4/mntent.h	Sat May 27 00:36:14 2000
+@@ -23,6 +23,7 @@
+ #define MNTTYPE_PROC		"proc"		/* Linux process file system */
+ #define MNTTYPE_IGNORE		"ignore"	/* Ignore this entry */
+ #define MNTTYPE_SWAP		"swap"		/* Swap device */
++#define MNTTYPE_REISERFS	"reiserfs"	/* ReiserFS */
+ 
+ /* generic mount options */
+ #define MNTOPT_DEFAULTS		"defaults"	/* use all default opts */
+@@ -74,6 +75,14 @@
+ #define MNTOPT_USRQUOTA		"usrquota"	/* use userquota on this partition */
+ #define MNTOPT_GRPQUOTA		"grpquota"	/* use groupquota on this partition */
+ #define MNTOPT_RSQUASH		"rsquash"	/* threat root as an ordinary user */
++
++/* reiserfs specific options */
++#define MNTOPT_NOTAIL		"notail"
++#define MNTOPT_NOLOG		"nolog"
++#define MNTOPT_REPLAYONLY	"replayonly"
++#define MNTOPT_RESIZE		"resize"
++#define MNTOPT_HASH		"hash"
++#define MNTOPT_QCACHE		"qcache"
+ 
+ /* none defined yet */
+ 
