@@ -17,7 +17,7 @@ Patch2:		quota-rsquash.patch
 Patch3:		quota-sparc.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Quotas allow the system administrator to limit disk usage by a user and/or
