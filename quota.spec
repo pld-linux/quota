@@ -12,13 +12,16 @@ Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre5.tar.gz
+URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-Makefile.patch
 Patch1:		%{name}-man.patch
 Patch2:		%{name}-defaults.patch
 Patch3:		%{name}-fixfree.patch
 Patch4:		%{name}-infinite.patch
+Patch5:		%{name}-libwrap.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
+BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -56,8 +59,11 @@ yazýlýmlarýdýr.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 
 %build
+aclocal
+autoconf
 %configure
 %{__make}
 
