@@ -14,8 +14,10 @@ Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
+# Source0-md5:	13b6a46c61b35fe1c78ab9050cb4e463
 Source1:	%{name}-non-english-man-pages.tar.bz2
+# Source1-md5:	05a209bc054366ea190d1c67669f9ca3
 Source2:	rquotad.init
 Source3:	rquotad.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
