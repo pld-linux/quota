@@ -68,7 +68,7 @@ cd utils
 make ROOTDIR=$RPM_BUILD_ROOT BIN_GROUP=`id -g` SUPER_OWNER=`id -u` \
     BIN_OWNER=`id -u` install
 
-mv $RPM_BUILD_ROOT/usr/sbin/quota $RPM_BUILD_ROOT%{_bindir}/quota
+mv $RPM_BUILD_ROOT%{_sbindir}/quota $RPM_BUILD_ROOT%{_bindir}/quota
 
 echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
@@ -84,11 +84,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/quotaon
 %attr(755,root,root) /sbin/quotaoff
 %attr(755,root,root) %{_bindir}/quota
-%attr(755,root,root) /usr/sbin/edquota
-%attr(755,root,root) /usr/sbin/repquota
-%attr(755,root,root) /usr/sbin/warnquota
-%attr(755,root,root) /usr/sbin/quotastats
-%attr(750,root,root) /usr/sbin/rpc.rquotad
+%attr(755,root,root) %{_sbindir}/edquota
+%attr(755,root,root) %{_sbindir}/repquota
+%attr(755,root,root) %{_sbindir}/warnquota
+%attr(755,root,root) %{_sbindir}/quotastats
+%attr(750,root,root) %{_sbindir}/rpc.rquotad
 
 %{_mandir}/man[1238]/*
 
@@ -120,11 +120,11 @@ rm -rf $RPM_BUILD_ROOT
 - installs rpc.rquotad.8 symlink
 
 * Mon Oct 20 1997 Erik Troan <ewt@redhat.com>
-- removed /usr/include/rpcsvc/* from filelist
+- removed %{_includedir}/rpcsvc/* from filelist
 - uses a buildroot and %attr
 
 * Thu Jun 19 1997 Erik Troan <ewt@redhat.com>
 - built against glibc
 
 * Tue Mar 25 1997 Erik Troan <ewt@redhat.com>
-- Moved /usr/sbin/quota to %{_bindir}/quota
+- Moved %{_sbindir}/quota to %{_bindir}/quota
