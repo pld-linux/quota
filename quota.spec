@@ -90,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/sbin/quotastats
 %attr(750,root,root) /usr/sbin/rpc.rquotad
 
-%attr(644,root, man) %{_mandir}/man[1238]/*
+%{_mandir}/man[1238]/*
 
 %changelog
 * Tue Jan 26 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
