@@ -10,7 +10,7 @@ Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ
 Name:		quota
 Version:	3.10
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -23,14 +23,13 @@ Source3:	r%{name}d.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
 Patch1:		%{name}-pl.po-update.patch
+Patch2:		%{name}-nolibs.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libwrap-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_sbindir	/sbin
 
 %description
 Quotas allow the system administrator to limit disk usage by a user
@@ -107,6 +106,7 @@ dla zdalnego systemu plikСw.
 %setup -q -n quota-tools
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__aclocal}
@@ -116,13 +116,14 @@ dla zdalnego systemu plikСw.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}} \
-	$RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
+install -d $RPM_BUILD_ROOT{/sbin,/etc/{rc.d/init.d,sysconfig}}
 
 %{__make} install \
-	sbindir=%{_sbindir} \
-	bindir=%{_bindir} \
 	ROOTDIR=$RPM_BUILD_ROOT
+
+# essential, used by rc-scripts
+mv -f $RPM_BUILD_ROOT%{_sbindir}/{quotacheck,quotaon,quotaoff,convertquota} \
+	$RPM_BUILD_ROOT/sbin
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/rquotad
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rquotad
@@ -159,7 +160,17 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/quotagrpadmins
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/quotatab
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/warnquota.conf
-%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) /sbin/convertquota
+%attr(755,root,root) /sbin/quotacheck
+%attr(755,root,root) /sbin/quotaoff
+%attr(755,root,root) /sbin/quotaon
+%attr(755,root,root) %{_sbindir}/edquota
+%attr(755,root,root) %{_sbindir}/quotastats
+%attr(755,root,root) %{_sbindir}/quot
+%attr(755,root,root) %{_sbindir}/repquota
+%attr(755,root,root) %{_sbindir}/setquota
+%attr(755,root,root) %{_sbindir}/warnquota
+%attr(755,root,root) %{_sbindir}/xqmstats
 %attr(755,root,root) %{_bindir}/*
 
 %{_mandir}/man1/*
