@@ -6,12 +6,12 @@ Summary(pl):	Pakiet administaracyjny Quota
 Summary(pt_BR):	Pacote de administração quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	3.01
-Release:	0.pre9.2
+Version:	3.04
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre9.tar.gz
+Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-Makefile.patch
