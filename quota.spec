@@ -16,7 +16,7 @@ Patch0:		%{name}-Makefile.patch
 Patch1:		%{name}-glibc.patch
 Patch2:		%{name}-man.patch
 Patch3:		%{name}-dbtob.patch
-BuildPrereq:	e2fsprogs-static
+BuildRequires:	e2fsprogs-static
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
