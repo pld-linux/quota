@@ -1,0 +1,25 @@
+diff -ruN quota-tools-romke/repquota.c quota-tools/repquota.c
+--- quota-tools-romke/repquota.c	2004-12-30 15:08:45.000000000 +0100
++++ quota-tools/repquota.c	2003-02-14 18:26:40.000000000 +0100
+@@ -151,7 +151,7 @@
+ 	space2str(toqb(entry->dqb_curspace), numbuf[0], flags & FL_SHORTNUMS);
+ 	space2str(entry->dqb_bsoftlimit, numbuf[1], flags & FL_SHORTNUMS);
+ 	space2str(entry->dqb_bhardlimit, numbuf[2], flags & FL_SHORTNUMS);
+-	printf("%-*s %c%c %7s %7s %7s %6s", PRINTNAMELEN, pname,
++	printf("%-*s %c%c %8s %8s %8s %6s", PRINTNAMELEN, pname,
+ 	       overlim(qb2kb(toqb(entry->dqb_curspace)), qb2kb(entry->dqb_bsoftlimit), qb2kb(entry->dqb_bhardlimit)),
+ 	       overlim(entry->dqb_curinodes, entry->dqb_isoftlimit, entry->dqb_ihardlimit),
+ 	       numbuf[0], numbuf[1], numbuf[2], time);
+@@ -242,9 +242,9 @@
+ 	time2str(h->qh_info.dqi_bgrace, bgbuf, TF_ROUND);
+ 	time2str(h->qh_info.dqi_igrace, igbuf, TF_ROUND);
+ 	printf(_("Block grace time: %s; Inode grace time: %s\n"), bgbuf, igbuf);
+-	printf(_("                        Block limits                File limits\n"));
+-	printf(_("%-9s       used    soft    hard  grace    used  soft  hard  grace\n"), (type == USRQUOTA)?_("User"):_("Group"));
+-	printf("----------------------------------------------------------------------\n");
++	printf(_("                         Block limits                 File limits\n"));
++	printf(_("%-9s        used     soft     hard  grace    used  soft  hard  grace\n"), (type == USRQUOTA)?_("User"):_("Group"));
++	printf("-------------------------------------------------------------------------\n");
+ 
+ 	if (h->qh_ops->scan_dquots(h, output) < 0)
+ 		return;
