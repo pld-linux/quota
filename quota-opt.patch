@@ -1,0 +1,11 @@
+--- quota-3.00/Makefile~	Tue Jul 25 22:46:51 2000
++++ quota-3.00/Makefile	Sun Aug  6 16:31:26 2000
+@@ -10,7 +10,7 @@
+ OBJS = quota_io.o quotasys.o common.o setquota.o convertquota.o quotadebug.o quotaon.o quota.o repquota.o quotacheck.o edquota.o 
+ LIBOBJS = quota_io.o quotasys.o common.o
+ DIR = quota-3.00
+-CFLAGS = -Wall -O2 -g
++CFLAGS = -Wall $(OPT)
+ #CFLAGS = -Wall -O2
+ ifeq ($(RPC),1)
+   CFLAGS += -DRPC

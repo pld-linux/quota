@@ -1,0 +1,24 @@
+--- quota-3.00/edquota.c~	Tue Jul 25 01:01:49 2000
++++ quota-3.00/edquota.c	Sun Aug  6 18:20:43 2000
+@@ -99,8 +99,8 @@
+ 	struct dquot dquot;
+ 
+ 	read_dquot(id, &dquot);
+-	fprintf(tf, "Used %luKB, limits: soft=%lu hard=%lu\n", (ulong)dquot.dq_dqb.dqb_curspace,
+-	  (ulong)dquot.dq_dqb.dqb_bsoftlimit, (ulong)dquot.dq_dqb.dqb_bhardlimit);
++	fprintf(tf, "Used %luKB, limits: soft=%lu hard=%lu\n", (ulong)qb2kb(toqb(dquot.dq_dqb.dqb_curspace)),
++	  (ulong)qb2kb(dquot.dq_dqb.dqb_bsoftlimit), (ulong)qb2kb(dquot.dq_dqb.dqb_bhardlimit));
+ 	fprintf(tf, "Used %lu inodes, limits: soft=%lu hard=%lu\n", (ulong)dquot.dq_dqb.dqb_curinodes,
+ 	  (ulong)dquot.dq_dqb.dqb_isoftlimit, (ulong)dquot.dq_dqb.dqb_ihardlimit);
+ }
+@@ -151,8 +151,8 @@
+ 	read_dquot(id, &dquot);
+ 	if (sscanf(linebuf, "Used %luKB, limits: soft=%lu hard=%lu", &usage, &softlim, &hardlim) != 3)
+ 		die(12, "Can't parse limits: %s\n", linebuf);
+-	dquot.dq_dqb.dqb_bsoftlimit = softlim;
+-	dquot.dq_dqb.dqb_bhardlimit = hardlim;
++	dquot.dq_dqb.dqb_bsoftlimit = kb2qb(softlim);
++	dquot.dq_dqb.dqb_bhardlimit = kb2qb(hardlim);
+ 	if (!fgets(linebuf, MAXLINELEN, tf))
+ 		die(12, "Unexpected end of file.\n");
+ 	if (sscanf(linebuf, "Used %lu inodes, limits: soft=%lu hard=%lu", &usage, &softlim, &hardlim) != 3)
