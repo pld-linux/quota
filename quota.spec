@@ -4,15 +4,14 @@ Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	3.00
+Version:	3.00.3
 Release:	1
-Source0:	ftp://atrey.karlin.mff.cuni.cz/pub/local/jack/quota/utils/%{name}-%{version}.tar.gz
+Source0:	ftp://atrey.karlin.mff.cuni.cz/pub/local/jack/quota/utils/%{name}-3.00-3.tar.gz
 Source1:	rquotad.init
 Source2:	rquotad.sysconfig
 Patch0:		%{name}-opt.patch
-Patch1:		%{name}-toqb.patch
-Patch2:		%{name}-edquota.patch
-Patch3:		%{name}-setquota.patch
+Patch1:		%{name}-edquota.patch
+Patch2:		%{name}-setquota.patch
 Copyright:	BSD
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -67,14 +66,17 @@ file systems.
 Zdalny serwer quota.
 
 %prep
-%setup -q
+%setup -q -n %{name}-3.00
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
-%{__make} OPT="$RPM_OPT_FLAGS"
+%{__make} \
+	RPC=1 \
+	RPC_SERVER=1 \
+	EXT2_DIRECT=1 \
+	OPT="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
