@@ -4,19 +4,21 @@ Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	1.66
+Version:	1.70
 Release:	1
-URL:		ftp://sunsite.unc.edu/pub/Linux/system/Admin
-Source0:	%{name}-%{version}.tar.gz
-Source1:	%{name}.sh
+Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-%{version}.tar.gz
+Source1:	quota.sh
 Copyright:	BSD
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Patch0:		%{name}-Makefile.patch
-Patch1:		%{name}-glibc.patch
-Patch2:		%{name}-man.patch
-Patch3:		%{name}-dbtob.patch
-BuildRequires:	e2fsprogs-static
+Patch0:		quota-Makefile.patch
+Patch1:		quota-glibc.patch
+Patch2:		quota-man.patch
+Patch3:		quota-dbtob.patch
+Patch4:		quota-rsquash.patch
+Patch5:		quota-sparc.patch
+Patch6:		quota-setquota.patch
+BuildRequires:	e2fsprogs-devel
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -47,30 +49,27 @@ kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki yazýlýmlar kota
 sistemini kullanmak için gereken kontrol yazýlýmlarýdýr.
 
 %prep
-%setup -q -c
+%setup -q -n %{name}
 
-(cd utils; tar xzf %{name}-%{version}.tar.gz )
-
-%patch0 -p1 
-%patch1 -p1 
-%patch2 -p1 
-%patch3 -p1 
+%patch0 -p1 -b .pld 
+%patch1 -p2 
+%patch2 -p2 
+%patch3 -p2 
+%patch4 -p2 
+%patch5 -p2 
+%patch6 -p1
 
 %build
-cd utils
 make OPT="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{sbin,usr/{bin,sbin,share/man/{man{1,2,3,8}}}}
+install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
 
-cd utils
 make \
     ROOTDIR=$RPM_BUILD_ROOT \
-    BIN_GROUP=`id -g` \
-    SUPER_OWNER=`id -u` \
-    BIN_OWNER=`id -u` \
+    mandir=%{_mandir} \
     install
 
 echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
