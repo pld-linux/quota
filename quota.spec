@@ -4,7 +4,9 @@ Summary(es):	Paquete de administraciСn cuota
 Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(pt_BR):	Pacote de administraГЦo quota
+Summary(ru):	Утилиты системного администратора для управления дисковыми квотами
 Summary(tr):	Kota denetleme paketi
+Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Name:		quota
 Version:	3.04
 Release:	1
@@ -58,11 +60,21 @@ um usuАrio e/ou grupo por sistema de arquivos. Este pacote contИm as
 ferramentas que sЦo necessАrias para ativar, modificar e atualizar
 quotas.
 
+%description -l ru
+Пакет quota содержит утилиты системного администратора для мониторинга
+и ограничения использования дискового пространства пользователями и их
+группами в каждой файловой системе.
+
 %description -l tr
 Kota, sistem yЖneticisine, bir kullanЩcЩnЩn ya da kullanЩcЩ grubunun
 disk kullanЩmЩnЩ sЩnЩrlama yeteneПi verir. Bu paket iГerisindeki
 yazЩlЩmlar kota sistemini kullanmak iГin gereken kontrol
 yazЩlЩmlarЩdЩr.
+
+%description -l uk
+Пакет quota м╕стить утил╕ти системного адм╕н╕стратора для мон╕торингу
+та обмеження використання дискового простору користувачами та ╖х
+групами в кожн╕й файлов╕й систем╕.
 
 %prep
 %setup -q -n quota-tools
