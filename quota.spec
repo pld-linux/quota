@@ -1,3 +1,5 @@
+# TODO:
+# - add warnquota as cron job
 Summary:	Quota administration package
 Summary(de):	Quotenverwaltungspaket
 Summary(es):	Paquete de administración cuota
