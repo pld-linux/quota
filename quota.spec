@@ -15,7 +15,9 @@ Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
+# Source0-md5:	5897adec872176543d0379c37b5ed6cf
 Source1:	%{name}-non-english-man-pages.tar.bz2
+# Source1-md5:	05a209bc054366ea190d1c67669f9ca3
 Source2:	r%{name}d.init
 Source3:	r%{name}d.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
