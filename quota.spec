@@ -11,7 +11,7 @@ License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre7.tar.gz
+Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre9.tar.gz
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-Makefile.patch
 Patch1:		%{name}-defaults.patch
