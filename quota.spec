@@ -88,27 +88,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 
 %{_mandir}/man[18]/*
-
-%changelog
-* Fri May 21 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [1.66-1]
-- removed old patches (prepared new ;)
-- added patch against glibc,
-- more macros && FHS 2.0.
-
-* Tue Jan 26 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [1.55-11d]
-- rebuild on linux-2.2.0,
-- compressed man pages,
-- minor changes.
-
-* Tue Aug 11 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
-  [1.55-9d]
-- translation modified for pl,
-- build against glibc-2.1,
-- moved %changelog at the end of spec,
-- fixed files permisions,
-- removed all patches and added quota.patch,
-- changed quota-1.55.spec to quota.spec,
-- build from non root's account,
-- start at RH spec.
