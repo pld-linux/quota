@@ -9,12 +9,14 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	õÔÉÌ¦ÔÉ ÓÉÓÔÅÍÎÏÇÏ ÁÄÍ¦Î¦ÓÔÒÁÔÏÒÁ ÄÌÑ ËÅÒÕ×ÁÎÎÑ ÄÉÓËÏ×ÉÍÉ Ë×ÏÔÁÍÉ
 Name:		quota
 Version:	3.05
-Release:	1
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
+Source2:	rquotad.init
+Source3:	rquotad.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
 BuildRequires:	e2fsprogs-devel
@@ -73,6 +75,27 @@ yazýlýmlarýdýr.
 ÔÁ ÏÂÍÅÖÅÎÎÑ ×ÉËÏÒÉÓÔÁÎÎÑ ÄÉÓËÏ×ÏÇÏ ÐÒÏÓÔÏÒÕ ËÏÒÉÓÔÕ×ÁÞÁÍÉ ÔÁ §È
 ÇÒÕÐÁÍÉ × ËÏÖÎ¦Ê ÆÁÊÌÏ×¦Ê ÓÉÓÔÅÍ¦.
 
+%package rquotad
+Summary:	Remote quota server
+Summary(pl):	Zdalny serwer quota
+Group:		Networking/Daemons
+Prereq:		rc-scripts
+Prereq:		/sbin/chkconfig
+Requires:	portmap >= 4.0
+Obsoletes:	nfs-utils-rquotad
+
+%description rquotad
+rquotad is an rpc(3N) server which returns quotas for a user of a
+local file system which is mounted by a remote machine over the NFS.
+The results are used by quota(1) to display user quotas for remote
+file systems.
+
+%description rquotad -l pl
+rquotad jest serverem rpc(3N), który zwraca quoty u¿ytkownika
+lokalnego systemu plików, który jest zamountowany przez zdaln± maszynê
+poprzez NFS. Rezultaty s± u¿ywane przez quota(1), aby wy¶wietliæ quote
+dla zdalnego systemu plików.
+
 %prep
 %setup -q -n quota-tools
 %patch0 -p1
@@ -85,16 +108,19 @@ aclocal
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
+install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}} \
+	$RPM_BUILD_ROOT%{_sysconfdir}/{rc.d/init.d,sysconfig}
 
 %{__make} install \
 	ROOTDIR=$RPM_BUILD_ROOT
 
-echo .so quotaon.8 > $RPM_BUILD_ROOT%{_mandir}/man8/quotaoff.8
-rm -f $RPM_BUILD_ROOT%{_mandir}/man8/*rquotad.8
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/rquotad
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rquotad
+
+echo ".so quotaon.8" > $RPM_BUILD_ROOT%{_mandir}/man8/quotaoff.8
+echo ".so rquotad.8" >	$RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
-rm -f $RPM_BUILD_ROOT%{_mandir}/*/man8/*rquotad.8
 
 gzip -9 doc/{quotas-1.eps,quotas.ms}
 
@@ -102,6 +128,22 @@ gzip -9 doc/{quotas-1.eps,quotas.ms}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post rquotad
+/sbin/chkconfig --add rquotad
+if [ -r /var/lock/subsys/rquotad ]; then
+	/etc/rc.d/init.d/rquotad restart >&2
+else
+	echo "Run \"/etc/rc.d/init.d/rquotad start\" to start NFS quota daemon."
+fi
+
+%preun rquotad
+if [ "$1" = "0" ]; then
+	if [ -r /var/lock/subsys/rquotad ]; then
+		/etc/rc.d/init.d/rquotad stop >&2
+	fi
+	/sbin/chkconfig --del rquotad
+fi
 
 %files -f quota.lang
 %defattr(644,root,root,755)
@@ -124,7 +166,20 @@ rm -rf $RPM_BUILD_ROOT
 %lang(hu) %{_mandir}/hu/man8/*
 
 %lang(ja) %{_mandir}/ja/man1/*
-%lang(ja) %{_mandir}/ja/man8/*
+%lang(ja) %{_mandir}/ja/man8/quota*
+%lang(ja) %{_mandir}/ja/man8/edquota.8*
+%lang(ja) %{_mandir}/ja/man8/repquota.8*
+%lang(ja) %{_mandir}/ja/man8/setquota.8*
 
 %lang(pl) %{_mandir}/pl/man1/*
 %lang(pl) %{_mandir}/pl/man8/*
+
+%files rquotad
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/rpc.rquotad
+%attr(754,root,root) /etc/rc.d/init.d/rquotad
+%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rquotad
+
+%{_mandir}/man8/*rquotad.8*
+%lang(fr) %{_mandir}/fr/man8/*rquotad.8*
+%lang(ja) %{_mandir}/ja/man8/*rquotad.8*
