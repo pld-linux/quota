@@ -19,9 +19,8 @@ Source1:	%{name}-non-english-man-pages.tar.bz2
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-Makefile.patch
 Patch1:		%{name}-defaults.patch
-Patch2:		%{name}-fixfree.patch
-Patch3:		%{name}-libwrap.patch
-Patch4:		%{name}-man.patch
+Patch2:		%{name}-libwrap.patch
+Patch3:		%{name}-man.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	autoconf
@@ -84,8 +83,7 @@ yazýlýmlarýdýr.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p0
+%patch3 -p0
 
 %build
 aclocal
