@@ -1,7 +1,7 @@
-diff -ur quota-tools.orig/Makefile.in quota-tools/Makefile.in
---- quota-tools.orig/Makefile.in	Tue May  1 21:03:43 2001
-+++ quota-tools/Makefile.in	Wed May  2 22:51:23 2001
-@@ -64,7 +64,7 @@
+diff -ur quota-tools.org/Makefile.in quota-tools/Makefile.in
+--- quota-tools.org/Makefile.in	Fri Feb 22 15:59:33 2002
++++ quota-tools/Makefile.in	Wed Apr 10 17:41:41 2002
+@@ -65,7 +65,7 @@
  	done
  
  inst_mo: mo
@@ -10,11 +10,3 @@ diff -ur quota-tools.orig/Makefile.in quota-tools/Makefile.in
  	for n in $(shell ls po/*.po | sed 's/\.po/\.mo/'); do \
  	l=`basename $$n .mo`; \
  	$(INSTALL) -m 755 -d $(ROOTDIR)$(locale_dir)/$$l; \
-@@ -76,7 +76,6 @@
- 	-$(INSTALL) -m $(DEF_SBIN_MODE) \
- 	quotacheck quotaon convertquota $(ROOTDIR)$(root_sbindir)
- 	$(LN) quotaon $(ROOTDIR)$(root_sbindir)/quotaoff
--	chown -h $(BIN_OWNER):$(BIN_GROUP) $(ROOTDIR)$(root_sbindir)/quotaoff
- 	-$(INSTALL) -m $(DEF_SBIN_MODE) \
- 	edquota repquota warnquota quotastats setquota quot xqmstats \
- 	$(ROOTDIR)$(sbindir)
