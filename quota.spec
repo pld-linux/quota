@@ -7,7 +7,7 @@ Summary(pt_BR):	Pacote de administraГЦo quota
 Summary(ru):	Утилиты системного администратора для управления дисковыми квотами
 Summary(tr):	Kota denetleme paketi
 Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
-Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ.
+Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ
 Name:		quota
 Version:	3.07
 Release:	1
