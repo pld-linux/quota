@@ -70,9 +70,9 @@ make ROOTDIR=$RPM_BUILD_ROOT BIN_GROUP=`id -g` SUPER_OWNER=`id -u` \
 
 mv $RPM_BUILD_ROOT/usr/sbin/quota $RPM_BUILD_ROOT/usr/bin/quota
 
-echo .so rquotad.8 > $RPM_BUILD_ROOT/usr/man/man8/rpc.rquotad.8
+echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
-bzip2 -9 $RPM_BUILD_ROOT/usr/man/man[1238]/*
+bzip2 -9 $RPM_BUILD_ROOT%{_mandir}/man[1238]/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -90,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/sbin/quotastats
 %attr(750,root,root) /usr/sbin/rpc.rquotad
 
-%attr(644,root, man) /usr/man/man[1238]/*
+%attr(644,root, man) %{_mandir}/man[1238]/*
 
 %changelog
 * Tue Jan 26 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
