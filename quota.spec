@@ -1,5 +1,5 @@
 Summary:	Quota administration package
-Summary(de):	Quotenverwaltungspaket 
+Summary(de):	Quotenverwaltungspaket
 Summary(es):	Paquete de administración cuota
 Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
