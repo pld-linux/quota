@@ -7,49 +7,57 @@ Name:		quota
 Version:	2.00
 Release:	1
 Epoch:		1
+License:	BSD
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-%{version}.tar.gz
-Copyright:	BSD
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
-Patch0:		quota-Makefile.patch
-Patch1:		quota-man.patch
-Patch2:		quota-reiserfs.patch
+Patch0:		%{name}-Makefile.patch
+Patch1:		%{name}-man.patch
+Patch2:		%{name}-reiserfs.patch
+Patch3:		%{name}-defaults.patch
+Patch4:		%{name}-fixfree.patch
+Patch5:		%{name}-fixman.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Quotas allow the system administrator to limit disk usage by a user and/or
-group per filesystem. This package contains the tools which are needed to
-enable, modify, and update quotas.
+Quotas allow the system administrator to limit disk usage by a user
+and/or group per filesystem. This package contains the tools which are
+needed to enable, modify, and update quotas.
 
 %description -l de
-Quotas gestatten es dem Systemadministrator, die Festplattennutzung durch 
-einen Anwender und/oder Gruppen pro Dateisystem zu beschränken. Es 
-enthält die Tools, die zur Aktivierung, Modifikation und zum Aktualisieren 
-von Quoten erforderlich sind."
+Quotas gestatten es dem Systemadministrator, die Festplattennutzung
+durch einen Anwender und/oder Gruppen pro Dateisystem zu beschränken.
+Es enthält die Tools, die zur Aktivierung, Modifikation und zum
+Aktualisieren von Quoten erforderlich sind."
 
 %description -l fr
-Les quotas permettant à l'administrateur système de limiter l'utilisation
-disque par un utilisateur et/ou un groupe par système de fichiers. Ce paquetage
-contient les outils nécessaires à la mise en place, la modification et la mise
-à jour des quotas.
+Les quotas permettant à l'administrateur système de limiter
+l'utilisation disque par un utilisateur et/ou un groupe par système de
+fichiers. Ce paquetage contient les outils nécessaires à la mise en
+place, la modification et la mise à jour des quotas.
 
 %description -l pl
-Quota pozwala administaratorowi systemu na ograniczanie wielko¶ci miejsca 
-na dysku dla u¿ytkownika/grupy. Pakiet ten zawiera narzêdzia do aktywacji 
-i modyfikacji Quoty. 
+Quota pozwala administaratorowi systemu na ograniczanie wielko¶ci
+miejsca na dysku dla u¿ytkownika/grupy. Pakiet ten zawiera narzêdzia
+do aktywacji i modyfikacji Quoty.
 
 %description -l tr
-Kota, sistem yöneticisine, bir kullanýcýnýn ya da kullanýcý grubunun disk
-kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki yazýlýmlar kota
-sistemini kullanmak için gereken kontrol yazýlýmlarýdýr.
+Kota, sistem yöneticisine, bir kullanýcýnýn ya da kullanýcý grubunun
+disk kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki
+yazýlýmlar kota sistemini kullanmak için gereken kontrol
+yazýlýmlarýdýr.
 
 %prep
 %setup -q
-%patch0 -p1 
-%patch1 -p2 
+%patch0 -p1
+%patch1 -p2
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %configure
@@ -57,7 +65,6 @@ sistemini kullanmak için gereken kontrol yazýlýmlarýdýr.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
 
 %{__make} install \
