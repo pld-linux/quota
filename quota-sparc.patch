@@ -1,0 +1,512 @@
+From davem@piglet.twiddle.net  Tue Apr 13 03:50:39 1999
+Return-Path: <davem@piglet.twiddle.net>
+Received: from lacrosse.redhat.com (root@lacrosse.redhat.com [207.175.42.154])
+	by devserv.devel.redhat.com (8.8.7/8.8.7) with ESMTP id DAA25723;
+	Tue, 13 Apr 1999 03:50:37 -0400
+Received: from mail.redhat.com (mail.redhat.com [199.183.24.239])
+	by lacrosse.redhat.com (8.8.7/8.8.7) with ESMTP id DAA21788;
+	Tue, 13 Apr 1999 03:50:36 -0400
+Received: from piglet.twiddle.net (davem@piglet.twiddle.net [207.104.6.26])
+	by mail.redhat.com (8.8.7/8.8.7) with ESMTP id DAA09990;
+	Tue, 13 Apr 1999 03:50:34 -0400
+Received: (from davem@localhost)
+	by piglet.twiddle.net (8.8.7/8.8.7) id AAA27448;
+	Tue, 13 Apr 1999 00:50:34 -0700
+Date: Tue, 13 Apr 1999 00:50:34 -0700
+Message-Id: <199904130750.AAA27448@piglet.twiddle.net>
+X-Authentication-Warning: piglet.twiddle.net: davem set sender to davem@piglet.twiddle.net using -f
+From: David Miller <davem@twiddle.net>
+To: gafton@redhat.com
+CC: jbj@redhat.com, msw@redhat.com
+Subject: [PATCH] fix for sparc64 quotas
+Reply-To: davem@redhat.com
+Status: RO
+Content-Length: 15353
+Lines: 485
+
+
+Please add this patch to the quota package, it fixes
+BugZilla BugID 2147.  I verified it on sparc and sparc64
+RH6.0 machines, it should work just fine on other systems as well as
+the changed behavior is controlled by ifdef __sparc__ checks.
+
+I will close that BugID when this goes into a build and I re-verify
+that it is indeed fixed.
+
+--- quota-1.66/utils/dqblk.h.~1~	Tue Apr 13 07:22:43 1999
++++ quota-1.66/utils/dqblk.h	Tue Apr 13 07:30:59 1999
+@@ -0,0 +1,61 @@
++#if !defined(__sparc__) || defined(__sparc_v9__)
++/* We don't want any of this crap on anything other than 32bit sparc userland. */
++#define ondisk_dqblk dqblk
++#define CONVERT_TO_USER_DQUOT(__d, __s) memcpy((__d), (__s), sizeof(*(__d)))
++#define CONVERT_TO_KERNEL_DQUOT(__d, __s) memcpy((__d), (__s), sizeof(*(__d)))
++#define DQUOT_CONVERT_INIT() do { } while(0)
++#define ondisk_dqblk_size sizeof(struct dqblk)
++/* Leave dqoff as is... */
++#else
++
++#include <sys/utsname.h>
++
++extern int need_dquot_convert;
++
++#define DQUOT_CONVERT_INIT() \
++do {	struct utsname name; \
++	int ret; \
++	need_dquot_convert = 0; \
++	ret = uname(&name); \
++	if(ret == 0) { \
++		if(name.machine[5] != '\0') \
++			need_dquot_convert = 1; \
++	} \
++} while(0)
++
++struct ondisk_dqblk {
++	u_int32_t dqb_bhardlimit;	/* absolute limit on disk blks alloc */
++	u_int32_t dqb_bsoftlimit;	/* preferred limit on disk blks */
++	u_int32_t dqb_curblocks;	/* current block count */
++	u_int32_t dqb_ihardlimit;	/* maximum # allocated inodes */
++	u_int32_t dqb_isoftlimit;	/* preferred inode limit */
++	u_int32_t dqb_curinodes;	/* current # allocated inodes */
++	u_int64_t dqb_btime;		/* time limit for excessive disk use */
++	u_int64_t dqb_itime;		/* time limit for excessive files */
++};
++
++#define ondisk_dqblk_size \
++	(need_dquot_convert ? \
++	 sizeof(struct ondisk_dqblk) : \
++         sizeof(struct dqblk))
++
++#undef dqoff
++#define dqoff(__id)	((loff_t) ((__id) * ondisk_dqblk_size))
++
++#define CONVERT_TO_USER_DQUOT(__d, __s) \
++do {	memcpy((__d), (__s), sizeof(struct dqblk)); \
++	if(need_dquot_convert != 0) { \
++		(__d)->dqb_btime = (time_t) (__s)->dqb_btime; \
++		(__d)->dqb_itime = (time_t) (__s)->dqb_itime; \
++	} \
++} while(0)
++
++#define CONVERT_TO_KERNEL_DQUOT(__d, __s) \
++do {	memcpy((__d), (__s), ondisk_dqblk_size); \
++	if(need_dquot_convert != 0) { \
++		(__d)->dqb_btime = (u_int64_t) (__s)->dqb_btime; \
++		(__d)->dqb_itime = (u_int64_t) (__s)->dqb_itime; \
++	} \
++} while(0)
++
++#endif
+--- quota-1.66/utils/quota.c.~1~	Tue Apr 13 04:02:15 1999
++++ quota-1.66/utils/quota.c	Tue Apr 13 07:28:09 1999
+@@ -62,6 +62,10 @@
+ #include "rquota.h"
+ #endif
+ 
++#include "dqblk.h"
++
++int need_dquot_convert;
++
+ extern char *qfextension[];
+ 
+ struct quotause {
+@@ -110,6 +114,8 @@
+    extern char *optarg;
+    extern int optind, errno;
+ 
++   DQUOT_CONVERT_INIT();
++
+    while ((ch = getopt(argc, argv, "ugvqV")) != EOF) {
+       switch (ch) {
+          case 'g':
+@@ -472,7 +478,7 @@
+        * Initialize unix authentication
+        */
+       clnt->cl_auth = authunix_create_default();
+-      clnt_control(clnt, CLSET_TIMEOUT, &timeout);
++      clnt_control(clnt, CLSET_TIMEOUT, (char *) &timeout);
+ 
+       result = rquotaproc_getquota_2(&args.ext_arg, clnt);
+       if (result != NULL && result->status == Q_OK) {
+@@ -498,7 +504,7 @@
+              * Initialize unix authentication
+              */
+             clnt->cl_auth = authunix_create_default();
+-            clnt_control(clnt, CLSET_TIMEOUT, &timeout);
++            clnt_control(clnt, CLSET_TIMEOUT, (char *) &timeout);
+ 
+             result = rquotaproc_getquota_1(&args.arg, clnt);
+             if (result != NULL && result->status == Q_OK) {
+@@ -545,6 +551,8 @@
+ 
+       if (strcmp(mnt->mnt_type, MNTTYPE_NFS)) {
+          if (quotactl(qcmd, mnt->mnt_fsname, id, (caddr_t)&qup->dqblk) != 0) {
++	    struct ondisk_dqblk od_dqblk;
++
+             if (errno == ENOSYS || errno == ESRCH )
+                continue;
+             if ((fd = open(qfpathname, O_RDONLY)) < 0) {
+@@ -553,7 +561,7 @@
+                continue;
+             }
+             lseek(fd, (long) dqoff(id), L_SET);
+-            switch (read(fd, &qup->dqblk, sizeof(struct dqblk))) {
++            switch (read(fd, &od_dqblk, ondisk_dqblk_size)) {
+                case 0:/* EOF */
+                   /*
+                    * Convert implicit 0 quota (EOF) into an
+@@ -561,7 +569,8 @@
+                    */
+                   memset((caddr_t)&qup->dqblk, 0, sizeof(struct dqblk));
+                   break;
+-               case sizeof(struct dqblk):   /* OK */
++	       case sizeof(struct ondisk_dqblk):   /* OK */
++		  CONVERT_TO_USER_DQUOT(&qup->dqblk, &od_dqblk);
+                   break;
+                default:   /* ERROR */
+                   fprintf(stderr, "quota: read error");
+--- quota-1.66/utils/edquota.c.~1~	Tue Apr 13 04:02:15 1999
++++ quota-1.66/utils/edquota.c	Tue Apr 13 07:27:52 1999
+@@ -61,6 +61,10 @@
+ #include <unistd.h>
+ #include "pathnames.h"
+ 
++#include "dqblk.h"
++
++int need_dquot_convert;
++
+ extern char *qfextension[];
+ char *quotagroup = QUOTAGROUP;
+ char tmpfil[] = _PATH_TMP;
+@@ -85,6 +89,8 @@
+    char *protoname, ch;
+    int tflag = 0, pflag = 0;
+ 
++   DQUOT_CONVERT_INIT();
++
+    if (argc < 2)
+       usage();
+ 
+@@ -241,6 +247,7 @@
+       }
+ 
+       if (quotactl(qcmd, mnt->mnt_fsname, id, (caddr_t) &qup->dqblk) != 0) {
++         struct ondisk_dqblk od_dqblk;
+          if ((errno == EOPNOTSUPP || errno == ENOSYS || errno == ENOPKG) && !warned) {
+             warned++;
+             fprintf(stderr, "Warning: %s\n",
+@@ -261,8 +268,8 @@
+             (void) fchmod(fd, 0640);
+          }
+ 
+-         lseek(fd, (long) (id * sizeof(struct dqblk)), L_SET);
+-         switch (read(fd, &qup->dqblk, sizeof(struct dqblk))) {
++         lseek(fd, (long) dqoff(id), L_SET);
++         switch (read(fd, &od_dqblk, ondisk_dqblk_size)) {
+             case 0:/* EOF */
+                /*
+                 * Convert implicit 0 quota (EOF) into an
+@@ -271,7 +278,8 @@
+                bzero((caddr_t) & qup->dqblk,
+                      sizeof(struct dqblk));
+                break;
+-            case sizeof(struct dqblk):   /* OK */
++	    case sizeof(struct ondisk_dqblk):   /* OK */
++	       CONVERT_TO_USER_DQUOT(&qup->dqblk, &od_dqblk);
+                break;
+             default:   /* ERROR */
+                fprintf(stderr, "edquota: read error in ");
+@@ -311,9 +319,12 @@
+       if ((fd = open(qup->qfname, O_WRONLY)) < 0) {
+          perror(qup->qfname);
+       } else {
+-         lseek(fd, (long) id * (long) sizeof(struct dqblk), 0);
+-         if (write(fd, &qup->dqblk, sizeof(struct dqblk)) !=
+-             sizeof(struct dqblk)) {
++         struct ondisk_dqblk od_dqblk;
++
++	 CONVERT_TO_KERNEL_DQUOT(&od_dqblk, &qup->dqblk);
++         lseek(fd, (long) dqoff(id), 0);
++         if (write(fd, &od_dqblk, ondisk_dqblk_size) !=
++             ondisk_dqblk_size) {
+             fprintf(stderr, "edquota: ");
+             perror(qup->qfname);
+          }
+--- quota-1.66/utils/repquota.c.~1~	Tue Apr 13 04:02:15 1999
++++ quota-1.66/utils/repquota.c	Tue Apr 13 06:59:57 1999
+@@ -54,6 +54,10 @@
+ #include <stdio.h>
+ #include <errno.h>
+ 
++#include "dqblk.h"
++
++int need_dquot_convert;
++
+ extern char *qfextension[];
+ 
+ struct fileusage {
+@@ -84,6 +88,8 @@
+    extern int optind;
+    char ch, *qfnp;
+ 
++   DQUOT_CONVERT_INIT();
++
+    while ((ch = getopt(argc, argv, "aguv")) != EOF) {
+       switch (ch) {
+          case 'a':
+@@ -165,6 +171,7 @@
+    register struct fileusage *fup;
+    FILE *qf;
+    u_long id;
++   struct ondisk_dqblk od_dqblk;
+    struct dqblk dqbuf;
+    char *timeprt();
+    static struct dqblk zerodqblk;
+@@ -188,9 +195,10 @@
+       return (1);
+    }
+    for (id = 0;; id++) {
+-      fread(&dqbuf, sizeof(struct dqblk), 1, qf);
++      fread(&od_dqblk, ondisk_dqblk_size, 1, qf);
+       if (feof(qf))
+          break;
++      CONVERT_TO_USER_DQUOT(&dqbuf, &od_dqblk);
+       if (dqbuf.dqb_curinodes == 0 && dqbuf.dqb_curblocks == 0)
+          continue;
+       if ((fup = lookup(id, type)) == 0)
+--- quota-1.66/utils/quotacheck.c.~1~	Tue Apr 13 04:02:15 1999
++++ quota-1.66/utils/quotacheck.c	Tue Apr 13 07:13:01 1999
+@@ -38,6 +38,10 @@
+ #include <ext2fs/ext2fs.h>
+ #endif
+ 
++#include "dqblk.h"
++
++int need_dquot_convert;
++
+ #define DEF_BLOCKSIZE 1024
+ #define NODQUOT (struct dquot *)NULL
+ 
+@@ -201,6 +205,8 @@
+    char *usr_qfnp, *grp_qfnp;
+    register struct mntent *mnt;
+ 
++   DQUOT_CONVERT_INIT();
++
+    while ((ch = getopt(argc, argv, "avugdR")) != EOF) {
+       switch (ch) {
+          case 'a':
+@@ -609,6 +615,7 @@
+  */
+ void dump_to_file(char *fsname, char *quotafile, int type)
+ {
++   struct ondisk_dqblk od_dqblk;
+    struct dqblk dq_dqb;
+    struct dquot *dquot;
+    struct stat st;
+@@ -635,15 +642,16 @@
+     * quotafile. Only dump new gracetimes when creating a new 
+     * quotafile.
+     */
+-   if (read(fd, &dq_dqb, sizeof(struct dqblk)) <= 0) {
++   if (read(fd, &od_dqblk, ondisk_dqblk_size) <= 0) {
+       memset((caddr_t *)&dq_dqb, 0, sizeof(struct dqblk));
+       dq_dqb.dqb_btime = MAX_DQ_TIME;
+       dq_dqb.dqb_itime = MAX_IQ_TIME;
+-      write(fd, &dq_dqb, sizeof(struct dqblk));
++      CONVERT_TO_KERNEL_DQUOT(&od_dqblk, &dq_dqb);
++      write(fd, &od_dqblk, ondisk_dqblk_size);
+    }
+ 
+    if (fstat(fd, &st) == 0) {
+-      max_id = (st.st_size / sizeof(struct dqblk)) - 1;
++      max_id = (st.st_size / ondisk_dqblk_size) - 1;
+       if (max_id < highestid[type])
+          max_id = highestid[type];
+    } else
+@@ -652,9 +660,10 @@
+    for (id = 0; id <= max_id; id++) {
+       memset((caddr_t)&dq_dqb, 0, sizeof(struct dqblk));
+ 
+-      if (lseek(fd, dqoff(id), SEEK_SET) == dqoff(id))
+-         read(fd, &dq_dqb, sizeof(struct dqblk));
+-
++      if (lseek(fd, dqoff(id), SEEK_SET) == dqoff(id)) {
++         read(fd, &od_dqblk, ondisk_dqblk_size);
++	 CONVERT_TO_USER_DQUOT(&dq_dqb, &od_dqblk);
++      }
+       if ((dquot = lookup_dquot(id, type)) != NODQUOT) {
+          dq_curinodes = dquot->dq_curinodes;
+          dq_curblocks = dquot->dq_curblocks;
+@@ -680,8 +689,10 @@
+          if (quotactl(QCMD(Q_SETUSE, type), fsname, id, (caddr_t)&dq_dqb) == 0)
+             continue;
+ 
+-      if (lseek(fd, dqoff(id), SEEK_SET) == dqoff(id))
+-         write(fd, &dq_dqb, sizeof(struct dqblk));
++      if (lseek(fd, dqoff(id), SEEK_SET) == dqoff(id)) {
++         CONVERT_TO_KERNEL_DQUOT(&od_dqblk, &dq_dqb);
++         write(fd, &od_dqblk, ondisk_dqblk_size);
++      }
+    }
+    flock(fd, LOCK_UN);
+    close(fd);
+--- quota-1.66/utils/rquota_server.c.~1~	Tue Apr 13 04:02:15 1999
++++ quota-1.66/utils/rquota_server.c	Tue Apr 13 07:28:21 1999
+@@ -29,6 +29,8 @@
+ #include <mntent.h>
+ #include <stdio.h>
+ 
++#include "dqblk.h"
++
+ #define TYPE_EXTENDED	0x01
+ #define ACTIVE		0x02
+ 
+@@ -106,6 +108,7 @@
+       ext_getquota_args *ext_args;
+    } arguments;
+    FILE *fp;
++   struct ondisk_dqblk od_dqblk;
+    struct dqblk dq_dqb;
+    struct mntent *mnt;
+    char *pathname, *devicename, *qfpathname;
+@@ -162,7 +165,7 @@
+             if ((fd = open(qfpathname, O_RDONLY)) < 0)
+                continue;
+             lseek(fd, (long) dqoff(id), L_SET);
+-            switch (read(fd, &dq_dqb, sizeof(struct dqblk))) {
++            switch (read(fd, &od_dqblk, ondisk_dqblk_size)) {
+                case 0:/* EOF */
+                   /*
+                    * Convert implicit 0 quota (EOF) into an
+@@ -170,7 +173,8 @@
+                    */
+                   memset((caddr_t)&dq_dqb, 0, sizeof(struct dqblk));
+                   break;
+-               case sizeof(struct dqblk):   /* OK */
++	       case sizeof(struct ondisk_dqblk):   /* OK */
++                  CONVERT_TO_USER_DQUOT(&dq_dqb, &od_dqblk);
+                   break;
+                default:   /* ERROR */
+                   close(fd);
+--- quota-1.66/utils/rquota_svc.c.~1~	Sun Nov 17 08:59:46 1996
++++ quota-1.66/utils/rquota_svc.c	Tue Apr 13 07:03:30 1999
+@@ -28,6 +28,10 @@
+ #include <netinet/in.h>
+ #include <syslog.h>
+ 
++#include "dqblk.h"
++
++int need_dquot_convert;
++
+ #ifdef __STDC__
+ #define SIG_PF void(*)(int)
+ #endif
+@@ -181,6 +185,8 @@
+ int main(int argc, char **argv)
+ {
+    register SVCXPRT *transp;
++
++   DQUOT_CONVERT_INIT();
+ 
+    (void) pmap_unset(RQUOTAPROG, RQUOTAVERS);
+    (void) pmap_unset(RQUOTAPROG, EXT_RQUOTAVERS);
+--- quota-1.66/utils/warnquota.c.~1~	Tue Apr 13 04:02:15 1999
++++ quota-1.66/utils/warnquota.c	Tue Apr 13 07:10:14 1999
+@@ -31,6 +31,10 @@
+ #include <pwd.h>
+ #include <string.h>
+ 
++#include "dqblk.h"
++
++int need_dquot_convert;
++
+ #define MAIL_CMD "/usr/lib/sendmail -t"
+ #define FROM     "support@localhost"
+ #define SUBJECT  "Disk Quota usage on system"
+@@ -134,6 +138,7 @@
+ void read_quotafile(char *qfilename, char *devicename)
+ {
+    int fd, id = 0;
++   struct ondisk_dqblk od_dqblk;
+    struct dqblk dq_dqb;
+ 
+    if ((fd = open(qfilename, O_RDONLY)) < 0) {
+@@ -141,10 +146,12 @@
+       exit(1);
+    }
+ 
+-   while (read(fd, &dq_dqb, sizeof(struct dqblk)) == sizeof(struct dqblk)) {
++   while (read(fd, &od_dqblk, ondisk_dqblk_size) == ondisk_dqblk_size) {
+       if ((dq_bsoftlimit && dq_curblocks >= dq_bsoftlimit) ||
+-          (dq_isoftlimit && dq_curinodes >= dq_isoftlimit))
++          (dq_isoftlimit && dq_curinodes >= dq_isoftlimit)) {
++         CONVERT_TO_USER_DQUOT(&dq_dqb, &od_dqblk);
+          add_offence(id, devicename, &dq_dqb);
++      }
+       id++;
+    }
+    close(fd);
+@@ -300,5 +307,7 @@
+ 
+ main(int argc, char **argv)
+ {
++   DQUOT_CONVERT_INIT();
++
+    warn_quota();
+ }
+--- quota-1.66/utils/rquota_clnt.c.~1~	Thu Jul 20 11:27:40 1995
++++ quota-1.66/utils/rquota_clnt.c	Tue Apr 13 07:19:19 1999
+@@ -12,7 +12,11 @@
+ 	static getquota_rslt res;
+ 
+ 	bzero((char *)&res, sizeof(res));
+-	if (clnt_call(clnt, RQUOTAPROC_GETQUOTA, xdr_getquota_args, argp, xdr_getquota_rslt, &res, TIMEOUT) != RPC_SUCCESS) {
++	if (clnt_call(clnt, RQUOTAPROC_GETQUOTA,
++		      (xdrproc_t) xdr_getquota_args,
++		      (caddr_t) argp,
++		      (xdrproc_t) xdr_getquota_rslt,
++		      (caddr_t) &res, TIMEOUT) != RPC_SUCCESS) {
+ 		return (NULL);
+ 	}
+ 	return (&res);
+@@ -27,7 +31,11 @@
+ 	static getquota_rslt res;
+ 
+ 	bzero((char *)&res, sizeof(res));
+-	if (clnt_call(clnt, RQUOTAPROC_GETACTIVEQUOTA, xdr_getquota_args, argp, xdr_getquota_rslt, &res, TIMEOUT) != RPC_SUCCESS) {
++	if (clnt_call(clnt, RQUOTAPROC_GETACTIVEQUOTA,
++		      (xdrproc_t) xdr_getquota_args,
++		      (caddr_t) argp,
++		      (xdrproc_t) xdr_getquota_rslt,
++		      (caddr_t) &res, TIMEOUT) != RPC_SUCCESS) {
+ 		return (NULL);
+ 	}
+ 	return (&res);
+@@ -42,7 +50,11 @@
+ 	static getquota_rslt res;
+ 
+ 	bzero((char *)&res, sizeof(res));
+-	if (clnt_call(clnt, RQUOTAPROC_GETQUOTA, xdr_ext_getquota_args, argp, xdr_getquota_rslt, &res, TIMEOUT) != RPC_SUCCESS) {
++	if (clnt_call(clnt, RQUOTAPROC_GETQUOTA,
++		      (xdrproc_t) xdr_ext_getquota_args,
++		      (caddr_t) argp,
++		      (xdrproc_t) xdr_getquota_rslt,
++		      (caddr_t) &res, TIMEOUT) != RPC_SUCCESS) {
+ 		return (NULL);
+ 	}
+ 	return (&res);
+@@ -57,7 +69,11 @@
+ 	static getquota_rslt res;
+ 
+ 	bzero((char *)&res, sizeof(res));
+-	if (clnt_call(clnt, RQUOTAPROC_GETACTIVEQUOTA, xdr_ext_getquota_args, argp, xdr_getquota_rslt, &res, TIMEOUT) != RPC_SUCCESS) {
++	if (clnt_call(clnt, RQUOTAPROC_GETACTIVEQUOTA,
++		      (xdrproc_t) xdr_ext_getquota_args,
++		      (caddr_t) argp,
++		      (xdrproc_t) xdr_getquota_rslt,
++		      (caddr_t) &res, TIMEOUT) != RPC_SUCCESS) {
+ 		return (NULL);
+ 	}
+ 	return (&res);
+
