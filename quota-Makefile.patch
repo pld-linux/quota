@@ -1,10 +1,11 @@
---- quota-2.00-pre3/Makefile~	Tue Oct  5 20:55:30 1999
-+++ quota-2.00-pre3/Makefile	Fri Nov 26 20:09:09 1999
+diff -ur quota-2.00-pre4.orig/Makefile quota-2.00-pre4/Makefile
+--- quota-2.00-pre4.orig/Makefile	Sat Jan 29 10:06:10 2000
++++ quota-2.00-pre4/Makefile	Sat May 27 00:28:11 2000
 @@ -1,5 +1,6 @@
  PROGS         = quotacheck quotaon quota repquota warnquota quotastats edquota setquota rpc.rquotad 
--CFLAGS       += -I. -O3 -fexpensive-optimizations -fstrength-reduce -DRPC #-DALT_FORMAT -DRPC_SETQUOTA -DEXT2_DIRECT
-+OPT	      = -O2
-+CFLAGS       += $(OPT) -DRPC -DEXT2_DIRECT -I. #-DALT_FORMAT -DRPC_SETQUOTA
+-CFLAGS       += -I. -O3 -fexpensive-optimizations -fstrength-reduce -DRPC -DALT_FORMAT -DRPC_SETQUOTA -DEXT2_DIRECT
++OPT           = -O2
++CFLAGS       += $(OPT) -I. -DRPC -DALT_FORMAT -DRPC_SETQUOTA -DEXT2_DIRECT
  EXT2LIBS      = -lext2fs -lcom_err
  RPCSRC        = rquota.h rquota_xdr.c rquota_clnt.c
  VERSIONDEF    = -DQUOTA_VERSION=\"2.00\"
