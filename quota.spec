@@ -6,16 +6,16 @@ Summary(tr):	Kota denetleme paketi
 Name:		quota
 Version:	3.00
 Release:	1
-Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-2.00-pre4.tar.gz
-Source1:	quota.sh
+Source0:	ftp://atrey.karlin.mff.cuni.cz/pub/local/jack/quota/utils/%{name}-%{version}.tar.gz
+Source1:	rquotad.init
+Source2:	rquotad.sysconfig
+Patch0:		%{name}-opt.patch
+Patch1:		%{name}-toqb.patch
+Patch2:		%{name}-edquota.patch
+Patch3:		%{name}-setquota.patch
 Copyright:	BSD
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Patch0:		quota-Makefile.patch
-Patch1:		quota-man.patch
-Patch2:		quota-rsquash.patch
-Patch3:		quota-sparc.patch
-Patch4:		quota-reiserfs.patch
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	libwrap-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -47,48 +47,105 @@ Kota, sistem yöneticisine, bir kullanýcýnýn ya da kullanýcý grubunun disk
 kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki yazýlýmlar kota
 sistemini kullanmak için gereken kontrol yazýlýmlarýdýr.
 
-%prep
-%setup -q -n %{name}-2.00-pre4
+%package rquotad
+Summary:	Remote quota server
+Summary(pl):	Zdalny serwer quota
+Group:		Networking/Daemons
+Group(pl):	Sieciowe/Serwery
+Requires:	rc-scripts
+Requires:	portmap >= 4.0
+Requires:	%{name} = %{version}
+Obsoletes:	nfs-utils-rquotad
 
+%description rquotad
+rquotad is an rpc(3N) server which returns quotas for a user of a
+local file system which is mounted by a remote machine over the NFS.
+The results are used by quota(1) to display user quotas for remote
+file systems.
+
+%description -l pl rquotad
+Zdalny serwer quota.
+
+%prep
+%setup -q
 %patch0 -p1
-%patch1 -p2 
-%patch2 -p2 
-#%patch3 -p2 
-#%patch4 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %{__make} OPT="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{/sbin,%{_bindir},%{_sbindir},%{_mandir}/man{1,2,3,8}}
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
 
-%{__make} install \
-	ROOTDIR=$RPM_BUILD_ROOT \
-	mandir=%{_mandir}
+install -s convertquota $RPM_BUILD_ROOT/sbin/convertquota
+install -s quotacheck $RPM_BUILD_ROOT/sbin/quotacheck
+install -s quotaon $RPM_BUILD_ROOT/sbin/quotaon
+ln -s quotaon $RPM_BUILD_ROOT/sbin/quotaoff
+install -s quota $RPM_BUILD_ROOT%{_bindir}/quota
+install -s edquota $RPM_BUILD_ROOT%{_sbindir}/edquota
+install -s quotadebug $RPM_BUILD_ROOT%{_sbindir}/quotadebug
+install -s quotastats $RPM_BUILD_ROOT%{_sbindir}/quotastats
+install -s repquota $RPM_BUILD_ROOT%{_sbindir}/repquota
+install -s setquota $RPM_BUILD_ROOT%{_sbindir}/setquota
+install -s rpc.rquotad $RPM_BUILD_ROOT%{_sbindir}/rpc.rquotad
+
+install quota.1 $RPM_BUILD_ROOT%{_mandir}/man1/
+install quotactl.2 $RPM_BUILD_ROOT%{_mandir}/man2/
+install rquota.3 $RPM_BUILD_ROOT%{_mandir}/man3/
+install *.8 $RPM_BUILD_ROOT%{_mandir}/man8/
+
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/rquotad
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/rquotad
 
 echo .so rquotad.8 > $RPM_BUILD_ROOT%{_mandir}/man8/rpc.rquotad.8
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[18]/*
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1238]/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post rquotad
+/sbin/chkconfig --add rquotad
+if [ -r /var/lock/subsys/rquotad ]; then
+	/etc/rc.d/init.d/rquotad restart >&2
+else
+	echo "Run \"/etc/rc.d/init.d/rquotad start\" to start NFS quota daemon."
+fi
+
+%preun rquotad
+if [ "$1" = "0" ]; then
+	if [ -r /var/lock/subsys/rquotad ]; then
+		/etc/rc.d/init.d/rquotad stop >&2
+	fi
+	/sbin/chkconfig --del rquotad
+fi
+
 %files
 %defattr(644,root,root,755)
-
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_sbindir}/edquota
+%attr(755,root,root) %{_sbindir}/quotadebug
 %attr(755,root,root) %{_sbindir}/quotastats
 %attr(755,root,root) %{_sbindir}/repquota
 %attr(755,root,root) %{_sbindir}/setquota
-%attr(755,root,root) %{_sbindir}/warnquota
 %attr(755,root,root) %{_bindir}/*
-
 %{_mandir}/man1/*
+%{_mandir}/man2/*
+%{_mandir}/man8/convertquota.8*
 %{_mandir}/man8/edquota.8*
 %{_mandir}/man8/quotacheck.8*
 %{_mandir}/man8/quotaon.8*
+%{_mandir}/man8/quotastats.8*
 %{_mandir}/man8/repquota.8*
 %{_mandir}/man8/setquota.8*
+
+%files rquotad
+%defattr(644,root,root,755)
+%attr(754,root,root) /etc/rc.d/init.d/rquotad
+%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rquotad
+%attr(755,root,root) %{_sbindir}/rpc.rquotad
+%{_mandir}/man8/*rquotad.8*
