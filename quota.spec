@@ -5,7 +5,7 @@ Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
 Version:	1.70
-Release:	2
+Release:	3
 Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-%{version}.tar.gz
 Source1:	quota.sh
 Copyright:	BSD
@@ -18,6 +18,7 @@ Patch3:		quota-dbtob.patch
 Patch4:		quota-rsquash.patch
 Patch5:		quota-sparc.patch
 Patch6:		quota-setquota.patch
+Patch7:		quota-memleak.patch
 BuildRequires:	e2fsprogs-devel
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -73,6 +74,7 @@ Zdalny serwer quota.
 %patch4 -p2 
 %patch5 -p2 
 %patch6 -p1
+%patch7 -p1
 
 %build
 make OPT="$RPM_OPT_FLAGS"
