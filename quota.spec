@@ -4,9 +4,10 @@ Summary(fr):	Paquetage de gestion des quotas
 Summary(pl):	Pakiet administaracyjny Quota
 Summary(tr):	Kota denetleme paketi
 Name:		quota
-Version:	2.00pre11
+Version:	2.00
 Release:	1
-Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-2.00-pre11.tar.gz
+Epoch:		1
+Source0:	ftp://ftp.cistron.nl/pub/people/mvw/quota/%{name}-%{version}.tar.gz
 Copyright:	BSD
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -45,7 +46,7 @@ kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki yazýlýmlar kota
 sistemini kullanmak için gereken kontrol yazýlýmlarýdýr.
 
 %prep
-%setup -q -n %{name}-2.00-pre11
+%setup -q
 %patch0 -p1 
 %patch1 -p2 
 %patch2 -p1
