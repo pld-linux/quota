@@ -11,8 +11,6 @@ Release:	0.pre9.2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Source0:	http://prdownloads.sourceforge.net/linuxquota/%{name}-%{version}-pre9.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 URL:		http://sourceforge.net/projects/linuxquota/
