@@ -1,0 +1,11 @@
+--- quota-2.00/quotastats.c.fixfree	Tue Sep  5 14:49:43 2000
++++ quota-2.00/quotastats.c	Thu Feb  1 17:43:55 2001
+@@ -43,7 +43,7 @@
+    fprintf(stdout, _("Number of allocated dquots: %ld\n"), dqstats->allocated_dquots);
+    fprintf(stdout, _("Number of free dquots: %ld\n"), dqstats->free_dquots);
+    fprintf(stdout, _("Number of in use dquot entries (user/group): %ld\n"),
+-           dqstats->allocated_dquots - dqstats->free_dquots);
++	   dqstats->free_dquots - dqstats->allocated_dquots);
+    return(0); 
+ }
+ 

@@ -1,0 +1,14 @@
+--- quota-2.00/quotacheck.8.fixman	Wed Feb  7 12:51:54 2001
++++ quota-2.00/quotacheck.8	Wed Feb  7 12:53:49 2001
+@@ -57,8 +57,9 @@
+ used by a certain gid.
+ .TP
+ .B \-a
+-Check all of the quotas for the filesystems mentioned in /etc/fstab. Both
+-user and group quotas are checked as indictated by the /etc/fstab options.
++Check all of the quotas for the filesystems mentioned in
++/etc/fstab. Depending on the file system mount options indicated, quotas
++for user, group, or both will be checked.
+ .TP
+ .B \-R
+ When used in conjunction with \fP\-a\fR, all filesystems except the root 

@@ -1,0 +1,28 @@
+--- quota-2.00/warnquota.conf.defaults	Thu Feb  1 17:09:24 2001
++++ quota-2.00/warnquota.conf	Thu Feb  1 17:12:44 2001
+@@ -1,16 +1,16 @@
+-# this is an example warnquota.conf
++# This is an example /etc/warnquota.conf
++# Configured for Red Hat Linux systems
+ #
+ ; ; and # type comments are allowed
+-# and even blank lines
++# and even blank lines.
++# values can be quoted or not.
+ 
+-# values can be quoted:
+-MAIL_CMD 	= "/usr/my/sendmail/instead/sendmail -t"
+-FROM 		= "bas@localhost"
+-# but they don't have to be:
+-SUBJECT 	= Hey, user, clean up your account!
+-CC_TO 		= "sysadm@localhost"
++MAIL_CMD 	= "/usr/sbin/sendmail -t"
++FROM 		= "root@localhost"
++SUBJECT 	= "Disk quota usage on system"
++CC_TO 		= "root"
+ SUPPORT 	= "support@myhost.com"
+-PHONE 		= "(123) 456-1111 or (222) 333-4444"
++PHONE 		= "No phone numbers have been defined."
+ #
+ # end of example warnquota.conf file
+ #
