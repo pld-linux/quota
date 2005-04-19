@@ -12,7 +12,7 @@ Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
 Summary(zh_CN):	╢еелй╧сцгИ©Ж╣д╪Ю©ь╧╓╬ъ
 Name:		quota
 Version:	3.12
-Release:	3
+Release:	4
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -27,6 +27,7 @@ Patch0:		%{name}-defaults.patch
 Patch1:		%{name}-nolibs.patch
 Patch2:		%{name}-pl.po-update.patch
 Patch3:		%{name}-repquota-len-fix.patch
+Patch4:		%{name}-jfs.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
@@ -111,6 +112,7 @@ dla zdalnego systemu plikСw.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__aclocal}
