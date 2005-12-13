@@ -87,9 +87,9 @@ yazýlýmlarýdýr.
 Summary:	Remote quota server
 Summary(pl):	Zdalny serwer quota
 Group:		Networking/Daemons
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	portmap >= 4.0
+Requires:	rc-scripts
 Obsoletes:	nfs-utils-rquotad
 
 %description rquotad
@@ -105,7 +105,7 @@ poprzez NFS. Rezultaty s± u¿ywane przez quota(1), aby wy¶wietliæ quote
 dla zdalnego systemu plików.
 
 %prep
-%setup -q -n quota-tools
+%setup -q -n %{name}-tools
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -159,9 +159,9 @@ fi
 %files -f quota.lang
 %defattr(644,root,root,755)
 %doc doc/{quotas-1.eps,quotas.ms} quotatab
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/quotagrpadmins
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/quotatab
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/warnquota.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/quotagrpadmins
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/quotatab
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/warnquota.conf
 %attr(755,root,root) /sbin/convertquota
 %attr(755,root,root) /sbin/quotacheck
 %attr(755,root,root) /sbin/quotaoff
@@ -197,7 +197,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/rpc.rquotad
 %attr(754,root,root) /etc/rc.d/init.d/rquotad
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rquotad
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rquotad
 
 %{_mandir}/man8/*rquotad.8*
 %lang(fr) %{_mandir}/fr/man8/*rquotad.8*
