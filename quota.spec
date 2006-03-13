@@ -31,6 +31,7 @@ BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libwrap-devel
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -142,17 +143,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post rquotad
 /sbin/chkconfig --add rquotad
-if [ -r /var/lock/subsys/rquotad ]; then
-	/etc/rc.d/init.d/rquotad restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/rquotad start\" to start NFS quota daemon."
-fi
+%service rquotad restart "NFS quota daemon"
 
 %preun rquotad
 if [ "$1" = "0" ]; then
-	if [ -r /var/lock/subsys/rquotad ]; then
-		/etc/rc.d/init.d/rquotad stop >&2
-	fi
+	%service rquotad stop
 	/sbin/chkconfig --del rquotad
 fi
 
