@@ -112,8 +112,8 @@ dla zdalnego systemu plików.
 %build
 %{__aclocal}
 %{__autoconf}
-%configure	\
-    --enable-rpcsetquota
+%configure \
+	--enable-rpcsetquota
 
 %{__make}
 
