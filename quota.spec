@@ -1,15 +1,15 @@
 # TODO:
 # - add warnquota as cron job
 Summary:	Quota administration package
-Summary(de):	Quotenverwaltungspaket
-Summary(es):	Paquete de administración cuota
-Summary(fr):	Paquetage de gestion des quotas
-Summary(pl):	Pakiet administaracyjny Quota
-Summary(pt_BR):	Pacote de administração quota
-Summary(ru):	õÔÉÌÉÔÙ ÓÉÓÔÅÍÎÏÇÏ ÁÄÍÉÎÉÓÔÒÁÔÏÒÁ ÄÌÑ ÕÐÒÁ×ÌÅÎÉÑ ÄÉÓËÏ×ÙÍÉ Ë×ÏÔÁÍÉ
-Summary(tr):	Kota denetleme paketi
-Summary(uk):	õÔÉÌ¦ÔÉ ÓÉÓÔÅÍÎÏÇÏ ÁÄÍ¦Î¦ÓÔÒÁÔÏÒÁ ÄÌÑ ËÅÒÕ×ÁÎÎÑ ÄÉÓËÏ×ÉÍÉ Ë×ÏÔÁÍÉ
-Summary(zh_CN):	´ÅÅÌÊ¹ÓÃÇé¿öµÄ¼à¿Ø¹¤¾ß
+Summary(de.UTF-8):   Quotenverwaltungspaket
+Summary(es.UTF-8):   Paquete de administraciÃ³n cuota
+Summary(fr.UTF-8):   Paquetage de gestion des quotas
+Summary(pl.UTF-8):   Pakiet administaracyjny Quota
+Summary(pt_BR.UTF-8):   Pacote de administraÃ§Ã£o quota
+Summary(ru.UTF-8):   Ð£Ñ‚Ð¸Ð»Ð¸Ñ‚Ñ‹ ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ð¾Ð³Ð¾ Ð°Ð´Ð¼Ð¸Ð½Ð¸ÑÑ‚Ñ€Ð°Ñ‚Ð¾Ñ€Ð° Ð´Ð»Ñ ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð´Ð¸ÑÐºÐ¾Ð²Ñ‹Ð¼Ð¸ ÐºÐ²Ð¾Ñ‚Ð°Ð¼Ð¸
+Summary(tr.UTF-8):   Kota denetleme paketi
+Summary(uk.UTF-8):   Ð£Ñ‚Ð¸Ð»Ñ–Ñ‚Ð¸ ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ð¾Ð³Ð¾ Ð°Ð´Ð¼Ñ–Ð½Ñ–ÑÑ‚Ñ€Ð°Ñ‚Ð¾Ñ€Ð° Ð´Ð»Ñ ÐºÐµÑ€ÑƒÐ²Ð°Ð½Ð½Ñ Ð´Ð¸ÑÐºÐ¾Ð²Ð¸Ð¼Ð¸ ÐºÐ²Ð¾Ñ‚Ð°Ð¼Ð¸
+Summary(zh_CN.UTF-8):   ç£ç›˜ä½¿ç”¨æƒ…å†µçš„ç›‘æŽ§å·¥å…·
 Name:		quota
 Version:	3.14
 Release:	2
@@ -38,54 +38,54 @@ Quotas allow the system administrator to limit disk usage by a user
 and/or group per filesystem. This package contains the tools which are
 needed to enable, modify, and update quotas.
 
-%description -l de
+%description -l de.UTF-8
 Quotas gestatten es dem Systemadministrator, die Festplattennutzung
-durch einen Anwender und/oder Gruppen pro Dateisystem zu beschränken.
-Es enthält die Tools, die zur Aktivierung, Modifikation und zum
+durch einen Anwender und/oder Gruppen pro Dateisystem zu beschrÃ¤nken.
+Es enthÃ¤lt die Tools, die zur Aktivierung, Modifikation und zum
 Aktualisieren von Quoten erforderlich sind."
 
-%description -l es
+%description -l es.UTF-8
 Cuotas permite al administrador del sistema limitar el uso de disco
 por un usuario y/o grupo por sistema de archivos. Este paquete
 contiene las herramientas que son necesarias para activar, modificar y
 actualizar cuotas.
 
-%description -l fr
-Les quotas permettant à l'administrateur système de limiter
-l'utilisation disque par un utilisateur et/ou un groupe par système de
-fichiers. Ce paquetage contient les outils nécessaires à la mise en
-place, la modification et la mise à jour des quotas.
+%description -l fr.UTF-8
+Les quotas permettant Ã  l'administrateur systÃ¨me de limiter
+l'utilisation disque par un utilisateur et/ou un groupe par systÃ¨me de
+fichiers. Ce paquetage contient les outils nÃ©cessaires Ã  la mise en
+place, la modification et la mise Ã  jour des quotas.
 
-%description -l pl
-Quota pozwala administratorowi systemu na ograniczanie wielko¶ci
-miejsca na dysku dla u¿ytkownika/grupy. Pakiet ten zawiera narzêdzia
+%description -l pl.UTF-8
+Quota pozwala administratorowi systemu na ograniczanie wielkoÅ›ci
+miejsca na dysku dla uÅ¼ytkownika/grupy. Pakiet ten zawiera narzÄ™dzia
 do aktywacji i modyfikacji Quoty.
 
-%description -l pt_BR
+%description -l pt_BR.UTF-8
 Quotas permite ao administrador do sistema limitar o uso de disco por
-um usuário e/ou grupo por sistema de arquivos. Este pacote contém as
-ferramentas que são necessárias para ativar, modificar e atualizar
+um usuÃ¡rio e/ou grupo por sistema de arquivos. Este pacote contÃ©m as
+ferramentas que sÃ£o necessÃ¡rias para ativar, modificar e atualizar
 quotas.
 
-%description -l ru
-ðÁËÅÔ quota ÓÏÄÅÒÖÉÔ ÕÔÉÌÉÔÙ ÓÉÓÔÅÍÎÏÇÏ ÁÄÍÉÎÉÓÔÒÁÔÏÒÁ ÄÌÑ ÍÏÎÉÔÏÒÉÎÇÁ
-É ÏÇÒÁÎÉÞÅÎÉÑ ÉÓÐÏÌØÚÏ×ÁÎÉÑ ÄÉÓËÏ×ÏÇÏ ÐÒÏÓÔÒÁÎÓÔ×Á ÐÏÌØÚÏ×ÁÔÅÌÑÍÉ É ÉÈ
-ÇÒÕÐÐÁÍÉ × ËÁÖÄÏÊ ÆÁÊÌÏ×ÏÊ ÓÉÓÔÅÍÅ.
+%description -l ru.UTF-8
+ÐŸÐ°ÐºÐµÑ‚ quota ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ ÑƒÑ‚Ð¸Ð»Ð¸Ñ‚Ñ‹ ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ð¾Ð³Ð¾ Ð°Ð´Ð¼Ð¸Ð½Ð¸ÑÑ‚Ñ€Ð°Ñ‚Ð¾Ñ€Ð° Ð´Ð»Ñ Ð¼Ð¾Ð½Ð¸Ñ‚Ð¾Ñ€Ð¸Ð½Ð³Ð°
+Ð¸ Ð¾Ð³Ñ€Ð°Ð½Ð¸Ñ‡ÐµÐ½Ð¸Ñ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ñ Ð´Ð¸ÑÐºÐ¾Ð²Ð¾Ð³Ð¾ Ð¿Ñ€Ð¾ÑÑ‚Ñ€Ð°Ð½ÑÑ‚Ð²Ð° Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑÐ¼Ð¸ Ð¸ Ð¸Ñ…
+Ð³Ñ€ÑƒÐ¿Ð¿Ð°Ð¼Ð¸ Ð² ÐºÐ°Ð¶Ð´Ð¾Ð¹ Ñ„Ð°Ð¹Ð»Ð¾Ð²Ð¾Ð¹ ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ.
 
-%description -l tr
-Kota, sistem yöneticisine, bir kullanýcýnýn ya da kullanýcý grubunun
-disk kullanýmýný sýnýrlama yeteneði verir. Bu paket içerisindeki
-yazýlýmlar kota sistemini kullanmak için gereken kontrol
-yazýlýmlarýdýr.
+%description -l tr.UTF-8
+Kota, sistem yÃ¶neticisine, bir kullanÄ±cÄ±nÄ±n ya da kullanÄ±cÄ± grubunun
+disk kullanÄ±mÄ±nÄ± sÄ±nÄ±rlama yeteneÄŸi verir. Bu paket iÃ§erisindeki
+yazÄ±lÄ±mlar kota sistemini kullanmak iÃ§in gereken kontrol
+yazÄ±lÄ±mlarÄ±dÄ±r.
 
-%description -l uk
-ðÁËÅÔ quota Í¦ÓÔÉÔØ ÕÔÉÌ¦ÔÉ ÓÉÓÔÅÍÎÏÇÏ ÁÄÍ¦Î¦ÓÔÒÁÔÏÒÁ ÄÌÑ ÍÏÎ¦ÔÏÒÉÎÇÕ
-ÔÁ ÏÂÍÅÖÅÎÎÑ ×ÉËÏÒÉÓÔÁÎÎÑ ÄÉÓËÏ×ÏÇÏ ÐÒÏÓÔÏÒÕ ËÏÒÉÓÔÕ×ÁÞÁÍÉ ÔÁ §È
-ÇÒÕÐÁÍÉ × ËÏÖÎ¦Ê ÆÁÊÌÏ×¦Ê ÓÉÓÔÅÍ¦.
+%description -l uk.UTF-8
+ÐŸÐ°ÐºÐµÑ‚ quota Ð¼Ñ–ÑÑ‚Ð¸Ñ‚ÑŒ ÑƒÑ‚Ð¸Ð»Ñ–Ñ‚Ð¸ ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ð¾Ð³Ð¾ Ð°Ð´Ð¼Ñ–Ð½Ñ–ÑÑ‚Ñ€Ð°Ñ‚Ð¾Ñ€Ð° Ð´Ð»Ñ Ð¼Ð¾Ð½Ñ–Ñ‚Ð¾Ñ€Ð¸Ð½Ð³Ñƒ
+Ñ‚Ð° Ð¾Ð±Ð¼ÐµÐ¶ÐµÐ½Ð½Ñ Ð²Ð¸ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð°Ð½Ð½Ñ Ð´Ð¸ÑÐºÐ¾Ð²Ð¾Ð³Ð¾ Ð¿Ñ€Ð¾ÑÑ‚Ð¾Ñ€Ñƒ ÐºÐ¾Ñ€Ð¸ÑÑ‚ÑƒÐ²Ð°Ñ‡Ð°Ð¼Ð¸ Ñ‚Ð° Ñ—Ñ…
+Ð³Ñ€ÑƒÐ¿Ð°Ð¼Ð¸ Ð² ÐºÐ¾Ð¶Ð½Ñ–Ð¹ Ñ„Ð°Ð¹Ð»Ð¾Ð²Ñ–Ð¹ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ–.
 
 %package rquotad
 Summary:	Remote quota server
-Summary(pl):	Zdalny serwer quota
+Summary(pl.UTF-8):   Zdalny serwer quota
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	portmap >= 4.0
@@ -98,11 +98,11 @@ local file system which is mounted by a remote machine over the NFS.
 The results are used by quota(1) to display user quotas for remote
 file systems.
 
-%description rquotad -l pl
-rquotad jest serverem rpc(3N), który zwraca quoty u¿ytkownika
-lokalnego systemu plików, który jest zamountowany przez zdaln± maszynê
-poprzez NFS. Rezultaty s± u¿ywane przez quota(1), aby wy¶wietliæ quote
-dla zdalnego systemu plików.
+%description rquotad -l pl.UTF-8
+rquotad jest serverem rpc(3N), ktÃ³ry zwraca quoty uÅ¼ytkownika
+lokalnego systemu plikÃ³w, ktÃ³ry jest zamountowany przez zdalnÄ… maszynÄ™
+poprzez NFS. Rezultaty sÄ… uÅ¼ywane przez quota(1), aby wyÅ›wietliÄ‡ quote
+dla zdalnego systemu plikÃ³w.
 
 %prep
 %setup -q -n %{name}-tools
