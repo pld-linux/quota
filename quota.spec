@@ -1,15 +1,15 @@
 # TODO:
 # - add warnquota as cron job
 Summary:	Quota administration package
-Summary(de.UTF-8):   Quotenverwaltungspaket
-Summary(es.UTF-8):   Paquete de administración cuota
-Summary(fr.UTF-8):   Paquetage de gestion des quotas
-Summary(pl.UTF-8):   Pakiet administaracyjny Quota
-Summary(pt_BR.UTF-8):   Pacote de administração quota
-Summary(ru.UTF-8):   Утилиты системного администратора для управления дисковыми квотами
-Summary(tr.UTF-8):   Kota denetleme paketi
-Summary(uk.UTF-8):   Утиліти системного адміністратора для керування дисковими квотами
-Summary(zh_CN.UTF-8):   磁盘使用情况的监控工具
+Summary(de.UTF-8):	Quotenverwaltungspaket
+Summary(es.UTF-8):	Paquete de administración cuota
+Summary(fr.UTF-8):	Paquetage de gestion des quotas
+Summary(pl.UTF-8):	Pakiet administaracyjny Quota
+Summary(pt_BR.UTF-8):	Pacote de administração quota
+Summary(ru.UTF-8):	Утилиты системного администратора для управления дисковыми квотами
+Summary(tr.UTF-8):	Kota denetleme paketi
+Summary(uk.UTF-8):	Утиліти системного адміністратора для керування дисковими квотами
+Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota
 Version:	3.14
 Release:	2
@@ -85,7 +85,7 @@ yazılımlarıdır.
 
 %package rquotad
 Summary:	Remote quota server
-Summary(pl.UTF-8):   Zdalny serwer quota
+Summary(pl.UTF-8):	Zdalny serwer quota
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	portmap >= 4.0
