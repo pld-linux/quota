@@ -1,13 +1,13 @@
 %define snap	20020426
 Summary:	Quota administration package
-Summary(de):	Quotenverwaltungspaket
-Summary(es):	Paquete de administraciСn cuota
-Summary(fr):	Paquetage de gestion des quotas
-Summary(pl):	Pakiet administaracyjny Quota
-Summary(pt_BR):	Pacote de administraГЦo quota
-Summary(ru):	Утилиты системного администратора для управления дисковыми квотами
-Summary(tr):	Kota denetleme paketi
-Summary(uk):	Утил╕ти системного адм╕н╕стратора для керування дисковими квотами
+Summary(de.UTF-8):   Quotenverwaltungspaket
+Summary(es.UTF-8):   Paquete de administraciцЁn cuota
+Summary(fr.UTF-8):   Paquetage de gestion des quotas
+Summary(pl.UTF-8):   Pakiet administaracyjny Quota
+Summary(pt_BR.UTF-8):   Pacote de administraц╖цёo quota
+Summary(ru.UTF-8):   пёя┌п╦п╩п╦я┌я▀ я│п╦я│я┌п╣п╪п╫п╬пЁп╬ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟ п╢п╩я▐ я┐п©я─п╟п╡п╩п╣п╫п╦я▐ п╢п╦я│п╨п╬п╡я▀п╪п╦ п╨п╡п╬я┌п╟п╪п╦
+Summary(tr.UTF-8):   Kota denetleme paketi
+Summary(uk.UTF-8):   пёя┌п╦п╩я√я┌п╦ я│п╦я│я┌п╣п╪п╫п╬пЁп╬ п╟п╢п╪я√п╫я√я│я┌я─п╟я┌п╬я─п╟ п╢п╩я▐ п╨п╣я─я┐п╡п╟п╫п╫я▐ п╢п╦я│п╨п╬п╡п╦п╪п╦ п╨п╡п╬я┌п╟п╪п╦
 Name:		quota
 Version:	3.05
 Release:	0.%{snap}
@@ -33,50 +33,50 @@ Quotas allow the system administrator to limit disk usage by a user
 and/or group per filesystem. This package contains the tools which are
 needed to enable, modify, and update quotas.
 
-%description -l de
+%description -l de.UTF-8
 Quotas gestatten es dem Systemadministrator, die Festplattennutzung
-durch einen Anwender und/oder Gruppen pro Dateisystem zu beschrДnken.
-Es enthДlt die Tools, die zur Aktivierung, Modifikation und zum
+durch einen Anwender und/oder Gruppen pro Dateisystem zu beschrц╓nken.
+Es enthц╓lt die Tools, die zur Aktivierung, Modifikation und zum
 Aktualisieren von Quoten erforderlich sind."
 
-%description -l es
+%description -l es.UTF-8
 Cuotas permite al administrador del sistema limitar el uso de disco
 por un usuario y/o grupo por sistema de archivos. Este paquete
 contiene las herramientas que son necesarias para activar, modificar y
 actualizar cuotas.
 
-%description -l fr
-Les quotas permettant Ю l'administrateur systХme de limiter
-l'utilisation disque par un utilisateur et/ou un groupe par systХme de
-fichiers. Ce paquetage contient les outils nИcessaires Ю la mise en
-place, la modification et la mise Ю jour des quotas.
+%description -l fr.UTF-8
+Les quotas permettant ц═ l'administrateur systц╗me de limiter
+l'utilisation disque par un utilisateur et/ou un groupe par systц╗me de
+fichiers. Ce paquetage contient les outils nц╘cessaires ц═ la mise en
+place, la modification et la mise ц═ jour des quotas.
 
-%description -l pl
-Quota pozwala administaratorowi systemu na ograniczanie wielko╤ci
-miejsca na dysku dla u©ytkownika/grupy. Pakiet ten zawiera narzЙdzia
+%description -l pl.UTF-8
+Quota pozwala administaratorowi systemu na ograniczanie wielkoе⌡ci
+miejsca na dysku dla uе╪ytkownika/grupy. Pakiet ten zawiera narzд≥dzia
 do aktywacji i modyfikacji Quoty.
 
-%description -l pt_BR
+%description -l pt_BR.UTF-8
 Quotas permite ao administrador do sistema limitar o uso de disco por
-um usuАrio e/ou grupo por sistema de arquivos. Este pacote contИm as
-ferramentas que sЦo necessАrias para ativar, modificar e atualizar
+um usuц║rio e/ou grupo por sistema de arquivos. Este pacote contц╘m as
+ferramentas que sцёo necessц║rias para ativar, modificar e atualizar
 quotas.
 
-%description -l ru
-Пакет quota содержит утилиты системного администратора для мониторинга
-и ограничения использования дискового пространства пользователями и их
-группами в каждой файловой системе.
+%description -l ru.UTF-8
+п÷п╟п╨п╣я┌ quota я│п╬п╢п╣я─п╤п╦я┌ я┐я┌п╦п╩п╦я┌я▀ я│п╦я│я┌п╣п╪п╫п╬пЁп╬ п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╟ п╢п╩я▐ п╪п╬п╫п╦я┌п╬я─п╦п╫пЁп╟
+п╦ п╬пЁя─п╟п╫п╦я┤п╣п╫п╦я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦я▐ п╢п╦я│п╨п╬п╡п╬пЁп╬ п©я─п╬я│я┌я─п╟п╫я│я┌п╡п╟ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐п╪п╦ п╦ п╦я┘
+пЁя─я┐п©п©п╟п╪п╦ п╡ п╨п╟п╤п╢п╬п╧ я└п╟п╧п╩п╬п╡п╬п╧ я│п╦я│я┌п╣п╪п╣.
 
-%description -l tr
-Kota, sistem yЖneticisine, bir kullanЩcЩnЩn ya da kullanЩcЩ grubunun
-disk kullanЩmЩnЩ sЩnЩrlama yeteneПi verir. Bu paket iГerisindeki
-yazЩlЩmlar kota sistemini kullanmak iГin gereken kontrol
-yazЩlЩmlarЩdЩr.
+%description -l tr.UTF-8
+Kota, sistem yц╤neticisine, bir kullanд╠cд╠nд╠n ya da kullanд╠cд╠ grubunun
+disk kullanд╠mд╠nд╠ sд╠nд╠rlama yeteneд÷i verir. Bu paket iц╖erisindeki
+yazд╠lд╠mlar kota sistemini kullanmak iц╖in gereken kontrol
+yazд╠lд╠mlarд╠dд╠r.
 
-%description -l uk
-Пакет quota м╕стить утил╕ти системного адм╕н╕стратора для мон╕торингу
-та обмеження використання дискового простору користувачами та ╖х
-групами в кожн╕й файлов╕й систем╕.
+%description -l uk.UTF-8
+п÷п╟п╨п╣я┌ quota п╪я√я│я┌п╦я┌я▄ я┐я┌п╦п╩я√я┌п╦ я│п╦я│я┌п╣п╪п╫п╬пЁп╬ п╟п╢п╪я√п╫я√я│я┌я─п╟я┌п╬я─п╟ п╢п╩я▐ п╪п╬п╫я√я┌п╬я─п╦п╫пЁя┐
+я┌п╟ п╬п╠п╪п╣п╤п╣п╫п╫я▐ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐ п╢п╦я│п╨п╬п╡п╬пЁп╬ п©я─п╬я│я┌п╬я─я┐ п╨п╬я─п╦я│я┌я┐п╡п╟я┤п╟п╪п╦ я┌п╟ я≈я┘
+пЁя─я┐п©п╟п╪п╦ п╡ п╨п╬п╤п╫я√п╧ я└п╟п╧п╩п╬п╡я√п╧ я│п╦я│я┌п╣п╪я√.
 
 %prep
 %setup -q -n quota-tools
