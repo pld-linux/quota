@@ -28,29 +28,33 @@ else
 	exit 0
 fi
 
-if [ -x /sbin/pidof ] && [ "$1" != "stop" ]; then
-	[ -z "`/sbin/pidof portmap`" ] && echo "Error: portmap isn't running" && exit 0
+if [ -x /sbin/pidof ] && [ "$1" != "stop" ] && [ -z "`/sbin/pidof portmap`" ]; then
+	echo "Error: portmap isn't running"
+	exit 0
 fi
 
 # Sanity checks
-[ -x /usr/sbin/rpc.rquotad ] || exit 0
 
-RETVAL=0
-# See how we were called.
-case "$1" in
-  start)
+if is_yes "$REMOTE_QUOTA_SETTING"; then
+    RQUOTADOPTIONS="$RQUOTADOPTIONS --setquota"
+else
+    RQUOTADOPTIONS="$RQUOTADOPTIONS --no-setquota"
+fi
+
+start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/rquotad ]; then
 		# Start daemons.
 		msg_starting "NFS quotas"
-		daemon rpc.rquotad
+		daemon rpc.rquotad $RQUOTADOPTIONS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/rquotad
 	else
 		msg_already_running "NFS quota daemon"
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	if [ -f /var/lock/subsys/rquotad ]; then
 		# Stop daemons.
 		msg_stopping "NFS quotas"
@@ -59,21 +63,30 @@ case "$1" in
 	else
 		msg_not_running "NFS quota daemon"
 	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
 	;;
   status)
 	status rpc.rquotad
 	exit $?
 	;;
   restart|force-reload)
-	$0 stop
-	$0 start
-	exit $?
+	stop
+	start
 	;;
   probe)
 	if [ ! -f /var/lock/subsys/quotad ]; then
 		echo start; exit 0
 	fi
-	/sbin/pidof rpc.rquotad >/dev/null 2>&1;
+	/sbin/pidof rpc.rquotad >/dev/null 2>&1
 	if [ $? = 1 ]; then
 		echo restart; exit 0
 	fi

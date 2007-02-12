@@ -11,28 +11,26 @@ Summary(tr):	Kota denetleme paketi
 Summary(uk):	õÔÉÌ¦ÔÉ ÓÉÓÔÅÍÎÏÇÏ ÁÄÍ¦Î¦ÓÔÒÁÔÏÒÁ ÄÌÑ ËÅÒÕ×ÁÎÎÑ ÄÉÓËÏ×ÉÍÉ Ë×ÏÔÁÍÉ
 Summary(zh_CN):	´ÅÅÌÊ¹ÓÃÇé¿öµÄ¼à¿Ø¹¤¾ß
 Name:		quota
-Version:	3.12
-Release:	4
+Version:	3.14
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
-# Source0-md5:	d69870f4a9732ed2fe072952ee7f1462
+# Source0-md5:	e6ae17d4bf26012e820c3582ec7af487
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	05a209bc054366ea190d1c67669f9ca3
 Source2:	r%{name}d.init
 Source3:	r%{name}d.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
-Patch1:		%{name}-nolibs.patch
-Patch2:		%{name}-pl.po-update.patch
-Patch3:		%{name}-repquota-len-fix.patch
-Patch4:		%{name}-jfs.patch
+Patch1:		%{name}-repquota-len-fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libwrap-devel
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -89,9 +87,9 @@ yazýlýmlarýdýr.
 Summary:	Remote quota server
 Summary(pl):	Zdalny serwer quota
 Group:		Networking/Daemons
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	portmap >= 4.0
+Requires:	rc-scripts
 Obsoletes:	nfs-utils-rquotad
 
 %description rquotad
@@ -107,17 +105,16 @@ poprzez NFS. Rezultaty s± u¿ywane przez quota(1), aby wy¶wietliæ quote
 dla zdalnego systemu plików.
 
 %prep
-%setup -q -n quota-tools
+%setup -q -n %{name}-tools
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 %{__aclocal}
 %{__autoconf}
-%configure
+%configure \
+	--enable-rpcsetquota
+
 %{__make}
 
 %install
@@ -146,26 +143,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %post rquotad
 /sbin/chkconfig --add rquotad
-if [ -r /var/lock/subsys/rquotad ]; then
-	/etc/rc.d/init.d/rquotad restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/rquotad start\" to start NFS quota daemon."
-fi
+%service rquotad restart "NFS quota daemon"
 
 %preun rquotad
 if [ "$1" = "0" ]; then
-	if [ -r /var/lock/subsys/rquotad ]; then
-		/etc/rc.d/init.d/rquotad stop >&2
-	fi
+	%service rquotad stop
 	/sbin/chkconfig --del rquotad
 fi
 
 %files -f quota.lang
 %defattr(644,root,root,755)
-%doc doc/{quotas-1.eps,quotas.ms} quotatab
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/quotagrpadmins
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/quotatab
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/warnquota.conf
+%doc Changelog doc/{quotas-1.eps,quotas.ms} quotatab
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/quotagrpadmins
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/quotatab
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/warnquota.conf
 %attr(755,root,root) /sbin/convertquota
 %attr(755,root,root) /sbin/quotacheck
 %attr(755,root,root) /sbin/quotaoff
@@ -201,7 +192,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/rpc.rquotad
 %attr(754,root,root) /etc/rc.d/init.d/rquotad
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rquotad
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rquotad
 
 %{_mandir}/man8/*rquotad.8*
 %lang(fr) %{_mandir}/fr/man8/*rquotad.8*
