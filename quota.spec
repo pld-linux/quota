@@ -12,7 +12,7 @@ Summary(uk.UTF-8):	Утиліти системного адміністрато�
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota
 Version:	3.14
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -143,13 +143,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %post rquotad
 /sbin/chkconfig --add rquotad
-%service rquotad restart "NFS quota daemon"
+%service rquotad restart "RPC rquotad"
 
 %preun rquotad
 if [ "$1" = "0" ]; then
 	%service rquotad stop
 	/sbin/chkconfig --del rquotad
 fi
+
+%triggerpostun rquotad -- %{name}-rquotad < 3.14-3
+/sbin/chkconfig rquotad reset
 
 %files -f quota.lang
 %defattr(644,root,root,755)
