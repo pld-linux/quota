@@ -89,7 +89,7 @@ Summary(pl.UTF-8):	Zdalny serwer quota
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	portmap >= 4.0
-Requires:	rc-scripts
+Requires:	rc-scripts >= 0.4.1.5
 Obsoletes:	nfs-utils-rquotad
 
 %description rquotad
