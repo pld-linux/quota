@@ -12,7 +12,7 @@ Summary(uk.UTF-8):	Утиліти системного адміністрато�
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota
 Version:	3.14
-Release:	3
+Release:	4
 Epoch:		1
 License:	BSD
 Group:		Applications/System
