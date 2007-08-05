@@ -11,20 +11,21 @@ Summary(tr.UTF-8):	Kota denetleme paketi
 Summary(uk.UTF-8):	Утиліти системного адміністратора для керування дисковими квотами
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota
-Version:	3.14
-Release:	4
+Version:	3.15
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
-# Source0-md5:	e6ae17d4bf26012e820c3582ec7af487
+# Source0-md5:	5a1c2f5e669aba825e0126d2f30ee622
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	05a209bc054366ea190d1c67669f9ca3
 Source2:	r%{name}d.init
 Source3:	r%{name}d.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		%{name}-defaults.patch
-Patch1:		%{name}-repquota-len-fix.patch
+Patch1:		%{name}-pl.po-update.patch
+Patch2:		%{name}-repquota-len-fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
@@ -108,6 +109,7 @@ dla zdalnego systemu plików.
 %setup -q -n %{name}-tools
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__aclocal}
