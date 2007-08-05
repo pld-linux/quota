@@ -23,3 +23,43 @@ diff -ruN quota-tools-romke/repquota.c quota-tools/repquota.c
  
  	if (h->qh_ops->scan_dquots(h, output) < 0)
  		return;
+--- quota-tools/po/pl.po.orig	2007-08-05 02:54:47.475278000 +0200
++++ quota-tools/po/pl.po	2007-08-05 09:09:14.959627463 +0200
+@@ -2065,13 +2065,13 @@
+ 
+ #: repquota.c:292
+ #, c-format
+-msgid "                        Block limits                File limits\n"
+-msgstr "                        Limity bloków               Limity plików\n"
++msgid "                         Block limits                 File limits\n"
++msgstr "                         Limity bloków                Limity plików\n"
+ 
+ #: repquota.c:293
+ #, c-format
+-msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
+-msgstr "%-9s       u¿yw.   miêk.   twar. pob³.    u¿yw. miêk. twar. pob³.\n"
++msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
++msgstr "%-9s        u¿yw.    miêk.    twar. pob³.    u¿yw. miêk. twar. pob³.\n"
+ 
+ #: repquota.c:293
+ msgid "User"
+--- quota-tools/po/fr.po.orig	2004-09-02 21:38:53.000000000 +0200
++++ quota-tools/po/fr.po	2007-08-05 09:11:30.455348924 +0200
+@@ -1661,13 +1661,13 @@
+ msgstr "Période de sursis bloc : %s ; période de sursis inode : %s\n"
+ 
+ #: repquota.c:241
+-msgid "                        Block limits                File limits\n"
+-msgstr "                        Limites bloc               Limites fichier\n"
++msgid "                         Block limits                 File limits\n"
++msgstr "                         Limites bloc                Limites fichier\n"
+ 
+ #: repquota.c:242
+ #, c-format
+-msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
+-msgstr "%-9s     utilisé souple stricte sursis utilisé souple stricte sursis\n"
++msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
++msgstr "%-9s      utilisé  souple  stricte sursis utilisé souple stricte sursis\n"
+ 
+ #: repquota.c:242
+ msgid "User"
