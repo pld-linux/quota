@@ -4,12 +4,6 @@
 # Conditional build:
 %bcond_with	kernel64	# build 32bit userland for 64bit kernel
 #
-
-# possibly also sparc and ppc
-%ifnarch %{ix86}
-%undefine	with_kernel64
-%endif
-
 Summary:	Quota administration package%{?with_kernel64: - 32bit userland for 64bit kernel}
 Summary(de.UTF-8):	Quotenverwaltungspaket
 Summary(es.UTF-8):	Paquete de administración cuota
@@ -22,7 +16,7 @@ Summary(uk.UTF-8):	Утиліти системного адміністрато�
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota%{?with_kernel64:64}
 Version:	3.15
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -42,6 +36,10 @@ BuildRequires:	e2fsprogs-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
+%if %{with kernel64}
+# possibly also sparc and ppc
+ExclusiveArch:	%{ix86}
+%endif
 BuildRoot:	%{tmpdir}/quota-%{version}-root-%(id -u -n)
 
 %description
