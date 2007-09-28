@@ -22,7 +22,7 @@ Summary(uk.UTF-8):	Утиліти системного адміністрато�
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota%{?with_kernel64:64}
 Version:	3.15
-Release:	1
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
