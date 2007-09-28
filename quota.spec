@@ -1,16 +1,26 @@
 # TODO:
 # - add warnquota as cron job
-Summary:	Quota administration package
+#
+# Conditional build:
+%bcond_with	kernel64	# build 32bit userland for 64bit kernel
+#
+
+# possibly also sparc and ppc
+%ifnarch %{x86}
+%undefine	with_kernel64
+%endif
+
+Summary:	Quota administration package%{?with_kernel64: - 32bit userland for 64bit kernel}
 Summary(de.UTF-8):	Quotenverwaltungspaket
 Summary(es.UTF-8):	Paquete de administración cuota
 Summary(fr.UTF-8):	Paquetage de gestion des quotas
-Summary(pl.UTF-8):	Pakiet administaracyjny Quota
+Summary(pl.UTF-8):	Pakiet administaracyjny Quota%{?with_kernel64: - 32 bitowe programy dla 64 bitowego jądra}
 Summary(pt_BR.UTF-8):	Pacote de administração quota
 Summary(ru.UTF-8):	Утилиты системного администратора для управления дисковыми квотами
 Summary(tr.UTF-8):	Kota denetleme paketi
 Summary(uk.UTF-8):	Утиліти системного адміністратора для керування дисковими квотами
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
-Name:		quota
+Name:		quota%{?with_kernel64:64}
 Version:	3.15
 Release:	1
 Epoch:		1
@@ -114,6 +124,12 @@ dla zdalnego systemu plików.
 %build
 %{__aclocal}
 %{__autoconf}
+
+%if %{with kernel64}
+CFLAGS="%{rpmcflags} -malign-double"
+export CFLAGS
+%endif
+
 %configure \
 	--enable-rpcsetquota
 
