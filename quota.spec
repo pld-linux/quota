@@ -49,6 +49,10 @@ Quotas allow the system administrator to limit disk usage by a user
 and/or group per filesystem. This package contains the tools which are
 needed to enable, modify, and update quotas.
 
+%if %{with kernel64}
+Warning: This package is for 32bit systems running on 64bit kernel!
+%endif
+
 %description -l de.UTF-8
 Quotas gestatten es dem Systemadministrator, die Festplattennutzung
 durch einen Anwender und/oder Gruppen pro Dateisystem zu beschränken.
@@ -71,6 +75,11 @@ place, la modification et la mise à jour des quotas.
 Quota pozwala administratorowi systemu na ograniczanie wielkości
 miejsca na dysku dla użytkownika/grupy. Pakiet ten zawiera narzędzia
 do aktywacji i modyfikacji Quoty.
+
+%if %{with kernel64}
+Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32 bitowych systemów
+       działających na 64 bitowym jądrze!
+%endif
 
 %description -l pt_BR.UTF-8
 Quotas permite ao administrador do sistema limitar o uso de disco por
@@ -109,11 +118,20 @@ local file system which is mounted by a remote machine over the NFS.
 The results are used by quota(1) to display user quotas for remote
 file systems.
 
+%if %{with kernel64}
+Warning: This package is for 32bit systems running on 64bit kernel!
+%endif
+
 %description rquotad -l pl.UTF-8
 rquotad jest serverem rpc(3N), który zwraca quoty użytkownika
 lokalnego systemu plików, który jest zamountowany przez zdalną maszynę
 poprzez NFS. Rezultaty są używane przez quota(1), aby wyświetlić quote
 dla zdalnego systemu plików.
+
+%if %{with kernel64}
+Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32 bitowych systemów
+       działających na 64 bitowym jądrze!
+%endif
 
 %prep
 %setup -q -n quota-tools
