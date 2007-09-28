@@ -6,7 +6,7 @@
 #
 
 # possibly also sparc and ppc
-%ifnarch %{x86}
+%ifnarch %{ix86}
 %undefine	with_kernel64
 %endif
 
