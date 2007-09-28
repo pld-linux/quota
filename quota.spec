@@ -26,23 +26,23 @@ Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	http://dl.sourceforge.net/linuxquota/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/linuxquota/quota-%{version}.tar.gz
 # Source0-md5:	5a1c2f5e669aba825e0126d2f30ee622
-Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/quota-non-english-man-pages.tar.bz2
 # Source1-md5:	05a209bc054366ea190d1c67669f9ca3
-Source2:	r%{name}d.init
-Source3:	r%{name}d.sysconfig
+Source2:	rquotad.init
+Source3:	rquotad.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
-Patch0:		%{name}-defaults.patch
-Patch1:		%{name}-pl.po-update.patch
-Patch2:		%{name}-repquota-len-fix.patch
+Patch0:		quota-defaults.patch
+Patch1:		quota-pl.po-update.patch
+Patch2:		quota-repquota-len-fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	e2fsprogs-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/quota-%{version}-root-%(id -u -n)
 
 %description
 Quotas allow the system administrator to limit disk usage by a user
@@ -116,7 +116,7 @@ poprzez NFS. Rezultaty są używane przez quota(1), aby wyświetlić quote
 dla zdalnego systemu plików.
 
 %prep
-%setup -q -n %{name}-tools
+%setup -q -n quota-tools
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -169,7 +169,7 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del rquotad
 fi
 
-%triggerpostun rquotad -- %{name}-rquotad < 3.14-3
+%triggerpostun rquotad -- quota-rquotad < 3.14-3
 /sbin/chkconfig rquotad reset
 
 %files -f quota.lang
