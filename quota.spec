@@ -15,20 +15,19 @@ Summary(tr.UTF-8):	Kota denetleme paketi
 Summary(uk.UTF-8):	Утиліти системного адміністратора для керування дисковими квотами
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota%{?with_kernel64:64}
-Version:	3.15
-Release:	3
+Version:	3.16
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linuxquota/quota-%{version}.tar.gz
-# Source0-md5:	5a1c2f5e669aba825e0126d2f30ee622
+# Source0-md5:	6d1467458a092c4754abef92e7fa6ebe
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/quota-non-english-man-pages.tar.bz2
 # Source1-md5:	05a209bc054366ea190d1c67669f9ca3
 Source2:	rquotad.init
 Source3:	rquotad.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		quota-defaults.patch
-Patch1:		quota-pl.po-update.patch
 Patch2:		quota-repquota-len-fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -134,7 +133,6 @@ Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32 bitowych systemów
 %prep
 %setup -q -n quota-tools
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 
 %build
