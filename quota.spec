@@ -28,6 +28,7 @@ Source2:	rquotad.init
 Source3:	rquotad.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		quota-defaults.patch
+Patch1:		quota-pl.po-update.patch
 Patch2:		quota-repquota-len-fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -133,6 +134,7 @@ Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32 bitowych systemów
 %prep
 %setup -q -n quota-tools
 %patch0 -p1
+%patch1 -p1
 %patch2 -p1
 
 %build
@@ -147,7 +149,8 @@ export CFLAGS
 %configure \
 	--enable-rpcsetquota
 
-%{__make}
+%{__make} \
+	CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
