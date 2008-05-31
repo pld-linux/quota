@@ -2,13 +2,13 @@
 # - add warnquota as cron job
 #
 # Conditional build:
-%bcond_with	kernel64	# build 32bit userland for 64bit kernel
+%bcond_with	kernel64	# build 32-bit userland for 64-bit kernel
 #
-Summary:	Quota administration package%{?with_kernel64: - 32bit userland for 64bit kernel}
+Summary:	Quota administration package%{?with_kernel64: - 32-bit userland for 64-bit kernel}
 Summary(de.UTF-8):	Quotenverwaltungspaket
 Summary(es.UTF-8):	Paquete de administración cuota
 Summary(fr.UTF-8):	Paquetage de gestion des quotas
-Summary(pl.UTF-8):	Pakiet administaracyjny Quota%{?with_kernel64: - 32 bitowe programy dla 64 bitowego jądra}
+Summary(pl.UTF-8):	Pakiet administaracyjny Quota%{?with_kernel64: - 32-bitowe programy dla 64-bitowego jądra}
 Summary(pt_BR.UTF-8):	Pacote de administração quota
 Summary(ru.UTF-8):	Утилиты системного администратора для управления дисковыми квотами
 Summary(tr.UTF-8):	Kota denetleme paketi
@@ -37,7 +37,6 @@ BuildRequires:	gettext-devel
 BuildRequires:	libwrap-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 %if %{with kernel64}
-# possibly also sparc and ppc
 ExclusiveArch:	%{ix86}
 %endif
 BuildRoot:	%{tmpdir}/quota-%{version}-root-%(id -u -n)
@@ -48,7 +47,7 @@ and/or group per filesystem. This package contains the tools which are
 needed to enable, modify, and update quotas.
 
 %if %{with kernel64}
-Warning: This package is for 32bit systems running on 64bit kernel!
+Warning: This package is for 32-bit systems running on 64-bit kernel!
 %endif
 
 %description -l de.UTF-8
@@ -75,8 +74,8 @@ miejsca na dysku dla użytkownika/grupy. Pakiet ten zawiera narzędzia
 do aktywacji i modyfikacji Quoty.
 
 %if %{with kernel64}
-Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32 bitowych systemów
-       działających na 64 bitowym jądrze!
+Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32-bitowych systemów
+       działających na 64-bitowym jądrze!
 %endif
 
 %description -l pt_BR.UTF-8
@@ -117,7 +116,7 @@ The results are used by quota(1) to display user quotas for remote
 file systems.
 
 %if %{with kernel64}
-Warning: This package is for 32bit systems running on 64bit kernel!
+Warning: This package is for 32-bit systems running on 64-bit kernel!
 %endif
 
 %description rquotad -l pl.UTF-8
@@ -127,8 +126,8 @@ poprzez NFS. Rezultaty są używane przez quota(1), aby wyświetlić quote
 dla zdalnego systemu plików.
 
 %if %{with kernel64}
-Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32 bitowych systemów
-       działających na 64 bitowym jądrze!
+Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32-bitowych systemów
+       działających na 64-bitowym jądrze!
 %endif
 
 %prep
