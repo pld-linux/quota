@@ -16,7 +16,7 @@ Summary(uk.UTF-8):	Утиліти системного адміністрато�
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota%{?with_kernel64:64}
 Version:	3.17
-Release:	0.1
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -28,7 +28,7 @@ Source2:	rquotad.init
 Source3:	rquotad.sysconfig
 URL:		http://sourceforge.net/projects/linuxquota/
 Patch0:		quota-defaults.patch
-#Patch1:		quota-pl.po-update.patch
+Patch1:		quota-pl.po-update.patch
 Patch2:		quota-repquota-len-fix.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -39,7 +39,7 @@ BuildRequires:	rpmbuild(macros) >= 1.268
 %if %{with kernel64}
 ExclusiveArch:	%{ix86}
 %endif
-BuildRoot:	%{tmpdir}/quota-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Quotas allow the system administrator to limit disk usage by a user
@@ -133,7 +133,7 @@ Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32-bitowych systemów
 %prep
 %setup -q -n quota-tools
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 
 %build

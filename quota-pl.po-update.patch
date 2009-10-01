@@ -1,5 +1,5 @@
---- quota-tools/po/pl.po.orig	2008-04-18 18:13:31.141544000 +0200
-+++ quota-tools/po/pl.po	2008-04-18 18:31:13.978114365 +0200
+--- quota-tools/po/pl.po	2008-10-13 19:29:17.000000000 +0200
++++ ../../BUILD/quota-tools/po/pl.po	2009-09-30 23:00:05.388146728 +0200
 @@ -1,14 +1,14 @@
  # Polish translation for quota.
  # Copyright (C) 2000, 2003, 2004, 2005 Free Software Foundation, Inc.
@@ -97,93 +97,15 @@
  msgid ""
  "-F, --format=formatname       edit quotas of a specific format\n"
  "-p, --prototype=name          copy data from a prototype user/group\n"
-@@ -186,70 +178,70 @@
- "-V, --version                 wy¶wietlenie informacji o wersji i zakoñczenie\n"
- "\n"
+@@ -197,7 +189,7 @@
  
--#: edquota.c:101 quota.c:107 setquota.c:71
-+#: edquota.c:103 quota.c:109 setquota.c:76
- #, c-format
- msgid "Bugs to: %s\n"
- msgstr "B³êdy na adres: %s\n"
- 
--#: edquota.c:178
-+#: edquota.c:184
- msgid "Prototype name does not make sence when editting grace period or times.\n"
- msgstr "Wzorcowy u¿ytkownik nie ma sensu przy edycji okresów pob³a¿liwo¶ci.\n"
- 
--#: edquota.c:199
-+#: edquota.c:205
+ #: edquota.c:199
  msgid "fsname mismatch\n"
- msgstr "nazwa systemu plików siê nie zgadza\n"
+-msgstr "nazwa systemu plików siê nie zgadza\n"
++msgstr "Nazwa systemu plików siê nie zgadza\n"
  
--#: edquota.c:239
-+#: edquota.c:247
+ #: edquota.c:239
  msgid "No filesystems with quota detected.\n"
- msgstr "Nie wykryto systemów plików z limitami.\n"
- 
--#: edquota.c:255
-+#: edquota.c:263
- #, c-format
- msgid "Cannot create temporary file: %s\n"
- msgstr "Nie mo¿na utworzyæ pliku tymczasowego: %s\n"
- 
--#: edquota.c:260
-+#: edquota.c:268
- #, c-format
- msgid "Cannot change owner of temporary file: %s\n"
- msgstr "Nie mo¿na zmieniæ w³a¶ciciela pliku tymczasowego: %s\n"
- 
--#: edquota.c:267
-+#: edquota.c:275
- msgid "Cannot write grace times to file.\n"
- msgstr "Nie mo¿na zapisaæ okresów pob³a¿liwo¶ci do pliku.\n"
- 
--#: edquota.c:271
-+#: edquota.c:279
- msgid "Error while editting grace times.\n"
- msgstr "B³±d podczas edycji okresów pob³a¿liwo¶ci.\n"
- 
--#: edquota.c:275
-+#: edquota.c:283
- msgid "Failed to parse grace times file.\n"
- msgstr "Analiza pliku okresów pob³a¿liwo¶ci nie powiod³a siê.\n"
- 
--#: edquota.c:284
-+#: edquota.c:292
- msgid "Cannot write individual grace times to file.\n"
- msgstr "Nie mo¿na zapisaæ do pliku pojedynczych okresów pob³a¿liwo¶ci.\n"
- 
--#: edquota.c:289
-+#: edquota.c:297
- msgid "Error while editting individual grace times.\n"
- msgstr "B³±d podczas edycji pojedynczych okresów pob³a¿liwo¶ci.\n"
- 
--#: edquota.c:294
-+#: edquota.c:302
- msgid "Cannot read individual grace times from file.\n"
- msgstr "Nie mo¿na odczytaæ z pliku pojedynczych okresów pob³a¿liwo¶ci.\n"
- 
--#: edquota.c:308
-+#: edquota.c:316
- msgid "Cannot write quotas to file.\n"
- msgstr "Nie mo¿na zapisaæ limitów do pliku.\n"
- 
--#: edquota.c:313
-+#: edquota.c:321
- msgid "Error while editting quotas.\n"
- msgstr "B³±d podczas edycji limitów.\n"
- 
--#: edquota.c:319
-+#: edquota.c:327
- msgid "Cannot reopen!"
- msgstr "Nie mo¿na ponownie otworzyæ!"
- 
--#: edquota.c:321
-+#: edquota.c:329
- msgid "Cannot read quotas from file.\n"
- msgstr "Nie mo¿na odczytaæ limitów z pliku.\n"
- 
 @@ -308,23 +300,23 @@
  msgid "XFS_IOC_FSBULKSTAT ioctl failed: %s\n"
  msgstr "ioctl XFS_IOC_FSBULKSTAT nie powiód³ siê: %s\n"
@@ -427,18 +349,18 @@
  msgstr "Nie uda³o siê wypisaæ komunikatu przez dbus: za ma³o pamiêci.\n"
  
 -#: quota_nld.c:329
--#, c-format
--msgid "Read from netlink socket failed: %s\n"
--msgstr "Odczyt z gniazda netlink nie powiód³ siê: %s\n"
--
--#: quota_nld.c:344
 +#: quota_nld.c:337
  #, c-format
--msgid "Failed parsing netlink command: %s\n"
--msgstr "Nie uda³o siê przeanalizowaæ polecenia netlink: %s\n"
+-msgid "Read from netlink socket failed: %s\n"
+-msgstr "Odczyt z gniazda netlink nie powiód³ siê: %s\n"
 +msgid "Failed to read or parse quota netlink message: %s\n"
 +msgstr "Nie uda³o siê odczytaæ lub przeanalizowaæ komunikatu netlink: %s\n"
  
+-#: quota_nld.c:344
+-#, c-format
+-msgid "Failed parsing netlink command: %s\n"
+-msgstr "Nie uda³o siê przeanalizowaæ polecenia netlink: %s\n"
+-
 -#: quotacheck.c:95
 +#: quotacheck.c:96
  msgid "Not enough memory.\n"
@@ -1441,88 +1363,20 @@
  msgid ""
  "-t, --edit-period          edit grace period\n"
  "-T, --edit-times           edit grace times for user/group\n"
-@@ -2267,70 +2283,83 @@
- "-h, --help                 wy¶wietlenie tego opisu i zakoñczenie\n"
- "-V, --version              wy¶wietlenie informacji o wersji i zakoñczenie\n"
+@@ -2327,8 +2343,21 @@
  
--#: setquota.c:82
-+#: setquota.c:87
+ #: setquota.c:301
  #, c-format
- msgid "Bad %s: %s\n"
- msgstr "B³êdny %s: %s\n"
- 
--#: setquota.c:170
-+#: setquota.c:183
- msgid "Group and user quotas cannot be used together.\n"
- msgstr "Limity grupy i u¿ytkownika nie mog± byæ u¿yte razem.\n"
- 
--#: setquota.c:174
-+#: setquota.c:187
- msgid "Prototype user has no sense when editting grace times.\n"
- msgstr "Wzorcowy u¿ytkownik nie ma sensu przy edycji okresów pob³a¿liwo¶ci.\n"
- 
--#: setquota.c:178
-+#: setquota.c:191
- msgid "Cannot set both individual and global grace time.\n"
- msgstr "Nie mo¿na ustawiæ jednocze¶nie jednostkowych i globalnych okresów pob³a¿liwo¶ci.\n"
- 
--#: setquota.c:182
-+#: setquota.c:195
- msgid "Batch mode cannot be used for setting grace times.\n"
- msgstr "Nie mo¿na u¿yæ trybu wsadowego do ustawienia okresów pob³a¿liwo¶ci.\n"
- 
--#: setquota.c:186
-+#: setquota.c:199
- msgid "Batch mode and prototype user cannot be used together.\n"
- msgstr "Tryb wsadowy i u¿ytkownik wzorcowy nie mog± byæ u¿yte razem.\n"
- 
--#: setquota.c:209
-+#: setquota.c:222
- msgid "block softlimit"
- msgstr "miêkki limit bloków"
- 
--#: setquota.c:210
-+#: setquota.c:223
- msgid "block hardlimit"
- msgstr "twardy limit bloków"
- 
--#: setquota.c:211
-+#: setquota.c:224
- msgid "inode softlimit"
- msgstr "miêkki limit i-wêz³ów"
- 
--#: setquota.c:212
-+#: setquota.c:225
- msgid "inode hardlimit"
- msgstr "twardy limit i-wêz³ów"
- 
--#: setquota.c:218 setquota.c:230
-+#: setquota.c:231 setquota.c:243
- msgid "block grace time"
- msgstr "okres pob³a¿liwo¶ci dla bloków"
- 
--#: setquota.c:219 setquota.c:236
-+#: setquota.c:232 setquota.c:249
- msgid "inode grace time"
- msgstr "okres pob³a¿liwo¶ci dla i-wêz³ów"
- 
--#: setquota.c:242
-+#: setquota.c:255
- msgid "Mountpoint not specified.\n"
- msgstr "Nie podano punktu montowania.\n"
- 
--#: setquota.c:297
+-msgid "Unable to get name '%s'.\n"
+-msgstr "Nie mo¿na uzyskaæ nazwy '%s'.\n"
++msgid "Unable to resolve name '%s' on line %d.\n"
++msgstr "Nie mo¿na rozwi±zaæ nazwy '%s' w linii %d.\n"
++
 +#: setquota.c:310
 +#, c-format
 +msgid "Line %d too long.\n"
 +msgstr "Linia %d zbyt d³uga.\n"
 +
-+#: setquota.c:322
- #, c-format
- msgid "Cannot parse input line %d.\n"
- msgstr "Nie mo¿na przetworzyæ linii wej¶cia %d.\n"
- 
--#: setquota.c:301
 +#: setquota.c:324 setquota.c:332
 +msgid "Exitting.\n"
 +msgstr "Zakoñczenie.\n"
@@ -1530,19 +1384,9 @@
 +#: setquota.c:325 setquota.c:333
 +msgid "Skipping line.\n"
 +msgstr "Pomijanie linii.\n"
-+
-+#: setquota.c:330
- #, c-format
--msgid "Unable to get name '%s'.\n"
--msgstr "Nie mo¿na uzyskaæ nazwy '%s'.\n"
-+msgid "Unable to resolve name '%s' on line %d.\n"
-+msgstr "Nie mo¿na rozwi±zaæ nazwy '%s' w linii %d.\n"
  
--#: setquota.c:359
-+#: setquota.c:394
+ #: setquota.c:359
  #, c-format
- msgid "cannot write times for %s. Maybe kernel does not support such operation?\n"
- msgstr "nie mo¿na zapisaæ czasów %s. Mo¿e j±dro nie obs³uguje takiej operacji?\n"
 @@ -2568,7 +2597,7 @@
  msgid "Unterminated last line, ignoring\n"
  msgstr "Niezakoñczona ostatnia linia, zignorowano\n"
