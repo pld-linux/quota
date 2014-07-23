@@ -1,7 +1,6 @@
-diff -ruN quota-tools-romke/repquota.c quota-tools/repquota.c
---- quota-tools-romke/repquota.c	2004-12-30 15:08:45.000000000 +0100
-+++ quota-tools/repquota.c	2003-02-14 18:26:40.000000000 +0100
-@@ -151,7 +151,7 @@
+--- quota-tools/repquota.c.orig	2012-03-01 23:59:32.000000000 +0100
++++ quota-tools/repquota.c	2014-07-22 21:36:17.080134850 +0200
+@@ -194,7 +194,7 @@
  	space2str(toqb(entry->dqb_curspace), numbuf[0], flags & FL_SHORTNUMS);
  	space2str(entry->dqb_bsoftlimit, numbuf[1], flags & FL_SHORTNUMS);
  	space2str(entry->dqb_bhardlimit, numbuf[2], flags & FL_SHORTNUMS);
@@ -10,43 +9,43 @@ diff -ruN quota-tools-romke/repquota.c quota-tools/repquota.c
  	       overlim(qb2kb(toqb(entry->dqb_curspace)), qb2kb(entry->dqb_bsoftlimit), qb2kb(entry->dqb_bhardlimit)),
  	       overlim(entry->dqb_curinodes, entry->dqb_isoftlimit, entry->dqb_ihardlimit),
  	       numbuf[0], numbuf[1], numbuf[2], time);
-@@ -242,9 +242,9 @@
+@@ -297,9 +297,9 @@
  	time2str(h->qh_info.dqi_bgrace, bgbuf, TF_ROUND);
  	time2str(h->qh_info.dqi_igrace, igbuf, TF_ROUND);
  	printf(_("Block grace time: %s; Inode grace time: %s\n"), bgbuf, igbuf);
--	printf(_("                        Block limits                File limits\n"));
+-	printf(_("                        %s limits                File limits\n"), spacehdr);
 -	printf(_("%-9s       used    soft    hard  grace    used  soft  hard  grace\n"), (type == USRQUOTA)?_("User"):_("Group"));
 -	printf("----------------------------------------------------------------------\n");
-+	printf(_("                         Block limits                 File limits\n"));
++	printf(_("                       %s limits                File limits\n"), spacehdr);
 +	printf(_("%-9s        used     soft     hard  grace    used  soft  hard  grace\n"), (type == USRQUOTA)?_("User"):_("Group"));
 +	printf("-------------------------------------------------------------------------\n");
  
  	if (h->qh_ops->scan_dquots(h, output) < 0)
  		return;
---- quota-tools/po/pl.po.orig	2007-08-05 02:54:47.475278000 +0200
-+++ quota-tools/po/pl.po	2007-08-05 09:09:14.959627463 +0200
-@@ -2065,13 +2065,13 @@
+--- quota-tools/po/pl.po.orig	2014-07-23 22:04:14.976438571 +0200
++++ quota-tools/po/pl.po	2014-07-23 22:07:53.059762752 +0200
+@@ -2270,13 +2270,13 @@
  
- #: repquota.c:292
+ #: repquota.c:300
  #, c-format
--msgid "                        Block limits                File limits\n"
--msgstr "                        Limity bloków               Limity plików\n"
-+msgid "                         Block limits                 File limits\n"
-+msgstr "                         Limity bloków                Limity plików\n"
+-msgid "                        %s limits                File limits\n"
+-msgstr "                       Limity %-7s                Limity plików\n"
++msgid "                       %s limits                File limits\n"
++msgstr "                      Limity %-7s                Limity plików\n"
  
- #: repquota.c:293
+ #: repquota.c:301
  #, c-format
 -msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
 -msgstr "%-9s       u¿yw.   miêk.   twar. pob³.    u¿yw. miêk. twar. pob³.\n"
 +msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
 +msgstr "%-9s        u¿yw.    miêk.    twar. pob³.    u¿yw. miêk. twar. pob³.\n"
  
- #: repquota.c:293
+ #: repquota.c:301
  msgid "User"
 --- quota-tools/po/fr.po.orig	2004-09-02 21:38:53.000000000 +0200
 +++ quota-tools/po/fr.po	2007-08-05 09:11:30.455348924 +0200
 @@ -1661,13 +1661,13 @@
- msgstr "Période de sursis bloc : %s ; période de sursis inode : %s\n"
+ msgstr "P?riode de sursis bloc : %s ; p?riode de sursis inode : %s\n"
  
  #: repquota.c:241
 -msgid "                        Block limits                File limits\n"
@@ -62,4 +61,44 @@ diff -ruN quota-tools-romke/repquota.c quota-tools/repquota.c
 +msgstr "%-9s      utilisé  souple  stricte sursis utilisé souple stricte sursis\n"
  
  #: repquota.c:242
+ msgid "User"
+--- quota-tools/po/cs.po.orig	2012-03-02 00:03:59.000000000 +0100
++++ quota-tools/po/cs.po	2014-07-23 22:09:19.976425772 +0200
+@@ -2410,13 +2410,13 @@
+ 
+ #: repquota.c:300
+ #, c-format
+-msgid "                        %s limits                File limits\n"
+-msgstr "                        Limity %s                Limity souborÅ¯\n"
++msgid "                       %s limits                File limits\n"
++msgstr "                       Limity %s                Limity souborÅ¯\n"
+ 
+ #: repquota.c:301
+ #, c-format
+-msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
+-msgstr "%-9s       uÅ¾ito   mÄ›kkÃ½   pevnÃ½ odklad   uÅ¾ito mÄ›kkÃ½ pevnÃ½ odklad\n"
++msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
++msgstr "%-9s        uÅ¾ito    mÄ›kkÃ½    pevnÃ½ odklad   uÅ¾ito mÄ›kkÃ½ pevnÃ½ odklad\n"
+ 
+ #: repquota.c:301
+ msgid "User"
+--- quota-tools/po/de.po.orig	2011-10-20 15:40:19.000000000 +0200
++++ quota-tools/po/de.po	2014-07-23 22:10:10.236423662 +0200
+@@ -2262,13 +2262,13 @@
+ 
+ #: repquota.c:300
+ #, c-format
+-msgid "                        %s limits                File limits\n"
+-msgstr "                        %s Limits                Dateilimits\n"
++msgid "                       %s limits                File limits\n"
++msgstr "                       %s Limits                Dateilimits\n"
+ 
+ #: repquota.c:301
+ #, c-format
+-msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
+-msgstr "%-9s       belegt  weich   hart  Gnade   belegt weich hart  Gnade\n"
++msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
++msgstr "%-9s        belegt   weich    hart  Gnade   belegt weich hart  Gnade\n"
+ 
+ #: repquota.c:301
  msgid "User"
