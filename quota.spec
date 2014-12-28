@@ -36,7 +36,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 %{?with_netlinks:BuildRequires:	dbus-devel}
 BuildRequires:	e2fsprogs-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 %{?with_netlinks:BuildRequires:	libnl-devel}
 BuildRequires:	libwrap-devel
 %{?with_ldap:BuildRequires:	openldap-devel}
