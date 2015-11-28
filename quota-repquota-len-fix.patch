@@ -1,47 +1,45 @@
---- quota-tools/repquota.c.orig	2012-03-01 23:59:32.000000000 +0100
-+++ quota-tools/repquota.c	2014-07-22 21:36:17.080134850 +0200
-@@ -194,7 +194,7 @@
- 	space2str(toqb(entry->dqb_curspace), numbuf[0], flags & FL_SHORTNUMS);
- 	space2str(entry->dqb_bsoftlimit, numbuf[1], flags & FL_SHORTNUMS);
+--- quota-tools/repquota.c.orig	2015-11-28 12:31:18.512394908 +0100
++++ quota-tools/repquota.c	2015-11-28 12:39:13.929041623 +0100
+@@ -214,7 +214,7 @@
  	space2str(entry->dqb_bhardlimit, numbuf[2], flags & FL_SHORTNUMS);
--	printf("%-*s %c%c %7s %7s %7s %6s", PRINTNAMELEN, pname,
-+	printf("%-*s %c%c %8s %8s %8s %6s", PRINTNAMELEN, pname,
- 	       overlim(qb2kb(toqb(entry->dqb_curspace)), qb2kb(entry->dqb_bsoftlimit), qb2kb(entry->dqb_bhardlimit)),
- 	       overlim(entry->dqb_curinodes, entry->dqb_isoftlimit, entry->dqb_ihardlimit),
- 	       numbuf[0], numbuf[1], numbuf[2], time);
-@@ -297,9 +297,9 @@
- 	time2str(h->qh_info.dqi_bgrace, bgbuf, TF_ROUND);
- 	time2str(h->qh_info.dqi_igrace, igbuf, TF_ROUND);
- 	printf(_("Block grace time: %s; Inode grace time: %s\n"), bgbuf, igbuf);
--	printf(_("                        %s limits                File limits\n"), spacehdr);
--	printf(_("%-9s       used    soft    hard  grace    used  soft  hard  grace\n"), (type == USRQUOTA)?_("User"):_("Group"));
--	printf("----------------------------------------------------------------------\n");
-+	printf(_("                       %s limits                File limits\n"), spacehdr);
-+	printf(_("%-9s        used     soft     hard  grace    used  soft  hard  grace\n"), (type == USRQUOTA)?_("User"):_("Group"));
-+	printf("-------------------------------------------------------------------------\n");
  
- 	if (h->qh_ops->scan_dquots(h, output) < 0)
- 		return;
+ 	if (ofmt == QOF_DEFAULT) {
+-		printf("%-*s %c%c %7s %7s %7s %6s", PRINTNAMELEN, pname,
++		printf("%-*s %c%c %8s %8s %8s %6s", PRINTNAMELEN, pname,
+ 		       overlim(qb2kb(toqb(entry->dqb_curspace)), qb2kb(entry->dqb_bsoftlimit), qb2kb(entry->dqb_bhardlimit)),
+ 		       overlim(entry->dqb_curinodes, entry->dqb_isoftlimit, entry->dqb_ihardlimit),
+ 		       numbuf[0], numbuf[1], numbuf[2], time);
+@@ -363,8 +363,8 @@
+ 		else
+ 			spacehdr = _("Block");
+ 		printf(_("Block grace time: %s; Inode grace time: %s\n"), bgbuf, igbuf);
+-		printf(_("                        %s limits                File limits\n"), spacehdr);
+-		printf(_("%-9s       used    soft    hard  grace    used  soft  hard  grace\n"), typestr);
++		printf(_("                       %s limits                File limits\n"), spacehdr);
++		printf(_("%-9s        used     soft     hard  grace    used  soft  hard  grace\n"), typestr);
+ 		printf("----------------------------------------------------------------------\n");
+ 	} else if (ofmt == QOF_XML) {
+ 		printf(" <BlockGraceTime>%s</BlockGraceTime>\n <InodeGraceTime>%s</InodeGraceTime>\n", bgbuf, igbuf);
 --- quota-tools/po/pl.po.orig	2014-07-23 22:04:14.976438571 +0200
 +++ quota-tools/po/pl.po	2014-07-23 22:07:53.059762752 +0200
 @@ -2270,13 +2270,13 @@
  
- #: repquota.c:300
+ #: repquota.c:366
  #, c-format
 -msgid "                        %s limits                File limits\n"
--msgstr "                       Limity %-7s                Limity plików\n"
+-msgstr "                       Limity %-7s                Limity plikÃ³w\n"
 +msgid "                       %s limits                File limits\n"
-+msgstr "                      Limity %-7s                Limity plików\n"
++msgstr "                      Limity %-7s                Limity plikÃ³w\n"
  
- #: repquota.c:301
+ #: repquota.c:367
  #, c-format
 -msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
--msgstr "%-9s       u¿yw.   miêk.   twar. pob³.    u¿yw. miêk. twar. pob³.\n"
+-msgstr "%-9s       uÅ¼yw.   miÄ™k.   twar. pobÅ‚.    uÅ¼yw. miÄ™k. twar. pobÅ‚.\n"
 +msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
-+msgstr "%-9s        u¿yw.    miêk.    twar. pob³.    u¿yw. miêk. twar. pob³.\n"
++msgstr "%-9s        uÅ¼yw.    miÄ™k.    twar. pobÅ‚.    uÅ¼yw. miÄ™k. twar. pobÅ‚.\n"
  
- #: repquota.c:301
- msgid "User"
+ #: rquota_svc.c:88
+ #, c-format
 --- quota-tools/po/fr.po.orig	2004-09-02 21:38:53.000000000 +0200
 +++ quota-tools/po/fr.po	2007-08-05 09:11:30.455348924 +0200
 @@ -1661,13 +1661,13 @@
