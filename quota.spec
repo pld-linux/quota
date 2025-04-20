@@ -3,8 +3,9 @@
 #
 # Conditional build:
 %bcond_with	kernel64	# build 32-bit userland for 64-bit kernel
-%bcond_with	ldap		# LDAP mail address lookups
-%bcond_with	netlink		# quota messages via netlink
+%bcond_without	ldap		# LDAP mail address lookups
+%bcond_without	netlink		# quota messages via netlink
+%bcond_without	rpc		# RPC support
 #
 Summary:	Quota administration package%{?with_kernel64: - 32-bit userland for 64-bit kernel}
 Summary(de.UTF-8):	Quotenverwaltungspaket
@@ -17,29 +18,33 @@ Summary(tr.UTF-8):	Kota denetleme paketi
 Summary(uk.UTF-8):	Утиліти системного адміністратора для керування дисковими квотами
 Summary(zh_CN.UTF-8):	磁盘使用情况的监控工具
 Name:		quota%{?with_kernel64:64}
-Version:	4.02
+Version:	4.09
 Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	http://downloads.sourceforge.net/linuxquota/quota-%{version}.tar.gz
-# Source0-md5:	a8a5df262261e659716ccad2a5d6df0d
+Source0:	https://downloads.sourceforge.net/linuxquota/quota-%{version}.tar.gz
+# Source0-md5:	f85c2e15d9a735640675ff4977b57bb6
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/quota-non-english-man-pages.tar.bz2
 # Source1-md5:	05a209bc054366ea190d1c67669f9ca3
 Source2:	rquotad.init
 Source3:	rquotad.sysconfig
-URL:		http://sourceforge.net/projects/linuxquota/
+URL:		https://sourceforge.net/projects/linuxquota/
 Patch0:		quota-defaults.patch
 Patch1:		quota-pl.po-update.patch
 Patch2:		quota-repquota-len-fix.patch
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.60
+BuildRequires:	automake >= 1:1.11
 %{?with_netlink:BuildRequires:	dbus-devel}
 BuildRequires:	e2fsprogs-devel
-BuildRequires:	gettext-tools
+BuildRequires:	gettext-tools >= 0.12.1
+BuildRequires:	libcom_err-devel
 %{?with_netlink:BuildRequires:	libnl-devel >= 3.2}
+%{?with_rpc:BuildRequires:	libtirpc-devel}
 BuildRequires:	libwrap-devel
 %{?with_ldap:BuildRequires:	openldap-devel}
+BuildRequires:	pkgconfig >= 1:0.20
+%{?with_rpc:BuildRequires:	rpcsvc-proto}
 BuildRequires:	rpmbuild(macros) >= 1.268
 %if %{with kernel64}
 ExclusiveArch:	%{ix86}
@@ -112,7 +117,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires:	portmap >= 4.0
 Requires:	rc-scripts >= 0.4.1.5
-Obsoletes:	nfs-utils-rquotad
+Obsoletes:	nfs-utils-rquotad < 1
 
 %description rquotad
 rquotad is an rpc(3N) server which returns quotas for a user of a
@@ -136,14 +141,18 @@ Uwaga: Ten pakiet jest przeznaczony wyłącznie dla 32-bitowych systemów
 %endif
 
 %prep
-%setup -q -n quota-tools
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%setup -q
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
+
+%{__rm} po/stamp-po
 
 %build
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
+%{__autoheader}
+%{__automake}
 
 %if %{with kernel64}
 CFLAGS="%{rpmcflags} -malign-double"
@@ -151,26 +160,30 @@ export CFLAGS
 %endif
 
 %configure \
-	%{?with_ldap:--enable-ldapmail} \
-	%{?with_netlink:--enable-netlink} \
-	--enable-rpcsetquota
+	%{!?with_ldap:--disable-ldapmail} \
+	%{!?with_netlink:--disable-netlink} \
+	%{!?with_rpc:--disable-rpc} \
+	%{?with_rpc:--enable-rpcsetquota} \
+	--disable-silent-rules
 
-%{__make} \
-	CC="%{__cc}"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/sbin,/etc/{rc.d/init.d,sysconfig}}
+install -d $RPM_BUILD_ROOT/sbin
 
 %{__make} install \
-	ROOTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT
 
 # essential, used by rc-scripts
 %{__mv} $RPM_BUILD_ROOT%{_sbindir}/{quotacheck,quotaon,quotaoff,convertquota} \
 	$RPM_BUILD_ROOT/sbin
 
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/rquotad
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rquotad
+%if %{with rpc}
+install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
+install -p %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/rquotad
+cp -p %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/rquotad
+%endif
 
 echo ".so quotaon.8" > $RPM_BUILD_ROOT%{_mandir}/man8/quotaoff.8
 
@@ -179,8 +192,10 @@ bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 %{__mv} $RPM_BUILD_ROOT%{_mandir}/fr/man8/{rquotad,rpc.rquotad}.8
 %{__mv} $RPM_BUILD_ROOT%{_mandir}/ja/man8/{rquotad,rpc.rquotad}.8
 
+%if %{with rpc}
 # interface included in glibc-devel
 %{__rm} $RPM_BUILD_ROOT{%{_includedir}/rpcsvc/rquota.[hx],%{_mandir}/man3/rquota.3}
+%endif
 
 %find_lang quota
 
@@ -202,7 +217,7 @@ fi
 
 %files -f quota.lang
 %defattr(644,root,root,755)
-%doc Changelog README.{ldap-support,mailserver} doc/{quotas-1.eps,quotas.ms} quotatab
+%doc Changelog README.{ldap-support,mailserver} doc/quotadoc.sgml quotatab
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/quotagrpadmins
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/quotatab
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/warnquota.conf
@@ -212,14 +227,12 @@ fi
 %attr(755,root,root) /sbin/quotaon
 %attr(755,root,root) %{_sbindir}/edquota
 %attr(755,root,root) %{_sbindir}/quotastats
-%attr(755,root,root) %{_sbindir}/quot
 %attr(755,root,root) %{_sbindir}/repquota
 %attr(755,root,root) %{_sbindir}/setquota
 %attr(755,root,root) %{_sbindir}/warnquota
 %attr(755,root,root) %{_sbindir}/xqmstats
 %attr(755,root,root) %{_bindir}/quota
 %attr(755,root,root) %{_bindir}/quotasync
-
 %{_mandir}/man1/quota.1*
 %{_mandir}/man1/quotasync.1*
 %{_mandir}/man5/quotagrpadmins.5*
@@ -227,8 +240,6 @@ fi
 %{_mandir}/man5/warnquota.conf.5*
 %{_mandir}/man8/convertquota.8*
 %{_mandir}/man8/edquota.8*
-%{_mandir}/man8/quot.8*
-%{_mandir}/man8/quota_nld.8*
 %{_mandir}/man8/quotacheck.8*
 %{_mandir}/man8/quotaoff.8*
 %{_mandir}/man8/quotaon.8*
@@ -237,20 +248,30 @@ fi
 %{_mandir}/man8/setquota.8*
 %{_mandir}/man8/warnquota.8*
 %{_mandir}/man8/xqmstats.8*
-
-%lang(fi) %{_mandir}/fi/man1/*
-
-%lang(hu) %{_mandir}/hu/man8/*
-
-%lang(ja) %{_mandir}/ja/man1/*
-%lang(ja) %{_mandir}/ja/man8/quota*
+%lang(fi) %{_mandir}/fi/man1/quota.1*
+%lang(hu) %{_mandir}/hu/man8/edquota.8*
+%lang(ja) %{_mandir}/ja/man1/quota.1*
+%lang(ja) %{_mandir}/ja/man8/quotacheck.8*
+%lang(ja) %{_mandir}/ja/man8/quotaoff.8*
+%lang(ja) %{_mandir}/ja/man8/quotaon.8*
 %lang(ja) %{_mandir}/ja/man8/edquota.8*
 %lang(ja) %{_mandir}/ja/man8/repquota.8*
 %lang(ja) %{_mandir}/ja/man8/setquota.8*
+%lang(pl) %{_mandir}/pl/man1/quota.1*
+%lang(pl) %{_mandir}/pl/man8/convertquota.8*
+%lang(pl) %{_mandir}/pl/man8/edquota.8*
+%lang(pl) %{_mandir}/pl/man8/quotacheck.8*
+%lang(pl) %{_mandir}/pl/man8/quotaoff.8*
+%lang(pl) %{_mandir}/pl/man8/quotaon.8*
+%lang(pl) %{_mandir}/pl/man8/repquota.8*
+%lang(pl) %{_mandir}/pl/man8/setquota.8*
+%lang(pl) %{_mandir}/pl/man8/warnquota.8*
+%if %{with netlink}
+%attr(755,root,root) %{_sbindir}/quota_nld
+%{_mandir}/man8/quota_nld.8*
+%endif
 
-%lang(pl) %{_mandir}/pl/man1/*
-%lang(pl) %{_mandir}/pl/man8/*
-
+%if %{with rpc}
 %files rquotad
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/rpc.rquotad
@@ -259,3 +280,4 @@ fi
 %{_mandir}/man8/rpc.rquotad.8*
 %lang(fr) %{_mandir}/fr/man8/rpc.rquotad.8*
 %lang(ja) %{_mandir}/ja/man8/rpc.rquotad.8*
+%endif

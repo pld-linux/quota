@@ -1,7 +1,7 @@
---- quota-tools/repquota.c.orig	2015-11-28 12:31:18.512394908 +0100
-+++ quota-tools/repquota.c	2015-11-28 12:39:13.929041623 +0100
-@@ -214,7 +214,7 @@
- 	space2str(entry->dqb_bhardlimit, numbuf[2], flags & FL_SHORTNUMS);
+--- quota-4.09/repquota.c.orig	2019-07-30 17:28:39.000000000 +0200
++++ quota-4.09/repquota.c	2025-04-20 13:23:57.312153636 +0200
+@@ -229,7 +229,7 @@ static void print(struct dquot *dquot, c
+ 	space2str(entry->dqb_bhardlimit, numbuf[2], spaceunit);
  
  	if (ofmt == QOF_DEFAULT) {
 -		printf("%-*s %c%c %7s %7s %7s %6s", PRINTNAMELEN, pname,
@@ -9,7 +9,7 @@
  		       overlim(qb2kb(toqb(entry->dqb_curspace)), qb2kb(entry->dqb_bsoftlimit), qb2kb(entry->dqb_bhardlimit)),
  		       overlim(entry->dqb_curinodes, entry->dqb_isoftlimit, entry->dqb_ihardlimit),
  		       numbuf[0], numbuf[1], numbuf[2], time);
-@@ -363,8 +363,8 @@
+@@ -392,8 +392,8 @@ static void report_it(struct quota_handl
  		else
  			spacehdr = _("Block");
  		printf(_("Block grace time: %s; Inode grace time: %s\n"), bgbuf, igbuf);
@@ -20,83 +20,63 @@
  		printf("----------------------------------------------------------------------\n");
  	} else if (ofmt == QOF_XML) {
  		printf(" <BlockGraceTime>%s</BlockGraceTime>\n <InodeGraceTime>%s</InodeGraceTime>\n", bgbuf, igbuf);
---- quota-tools/po/pl.po.orig	2014-07-23 22:04:14.976438571 +0200
-+++ quota-tools/po/pl.po	2014-07-23 22:07:53.059762752 +0200
-@@ -2270,13 +2270,13 @@
+--- quota-4.09/po/pl.po.orig	2025-04-20 13:24:44.968562126 +0200
++++ quota-4.09/po/pl.po	2025-04-20 13:25:27.298332806 +0200
+@@ -1391,13 +1391,13 @@ msgstr ""
  
- #: repquota.c:366
+ #: repquota.c:395
  #, c-format
 -msgid "                        %s limits                File limits\n"
 -msgstr "                       Limity %-7s                Limity plików\n"
 +msgid "                       %s limits                File limits\n"
 +msgstr "                      Limity %-7s                Limity plików\n"
  
- #: repquota.c:367
+ #: repquota.c:396
  #, c-format
 -msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
 -msgstr "%-9s       używ.   mięk.   twar. pobł.    używ. mięk. twar. pobł.\n"
 +msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
 +msgstr "%-9s        używ.    mięk.    twar. pobł.    używ. mięk. twar. pobł.\n"
  
- #: rquota_svc.c:88
+ #: quotacheck_v1.c:32
  #, c-format
---- quota-tools/po/fr.po.orig	2004-09-02 21:38:53.000000000 +0200
-+++ quota-tools/po/fr.po	2007-08-05 09:11:30.455348924 +0200
-@@ -1661,13 +1661,13 @@
- msgstr "P?riode de sursis bloc : %s ; p?riode de sursis inode : %s\n"
+--- quota-4.09/po/cs.po.orig	2022-09-16 13:08:32.000000000 +0200
++++ quota-4.09/po/cs.po	2025-04-20 13:25:56.764839839 +0200
+@@ -1384,13 +1384,13 @@ msgstr "Doba odkladu bloků: %s, Doba od
  
- #: repquota.c:241
--msgid "                        Block limits                File limits\n"
--msgstr "                        Limites bloc               Limites fichier\n"
-+msgid "                         Block limits                 File limits\n"
-+msgstr "                         Limites bloc                Limites fichier\n"
- 
- #: repquota.c:242
- #, c-format
--msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
--msgstr "%-9s     utilis� souple stricte sursis utilis� souple stricte sursis\n"
-+msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
-+msgstr "%-9s      utilis�  souple  stricte sursis utilis� souple stricte sursis\n"
- 
- #: repquota.c:242
- msgid "User"
---- quota-tools/po/cs.po.orig	2012-03-02 00:03:59.000000000 +0100
-+++ quota-tools/po/cs.po	2014-07-23 22:09:19.976425772 +0200
-@@ -2410,13 +2410,13 @@
- 
- #: repquota.c:300
+ #: repquota.c:395
  #, c-format
 -msgid "                        %s limits                File limits\n"
 -msgstr "                        Limity %s                Limity souborů\n"
 +msgid "                       %s limits                File limits\n"
 +msgstr "                       Limity %s                Limity souborů\n"
  
- #: repquota.c:301
+ #: repquota.c:396
  #, c-format
 -msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
 -msgstr "%-9s       užito   měkký   pevný odklad   užito měkký pevný odklad\n"
 +msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
 +msgstr "%-9s        užito    měkký    pevný odklad   užito měkký pevný odklad\n"
  
- #: repquota.c:301
- msgid "User"
---- quota-tools/po/de.po.orig	2011-10-20 15:40:19.000000000 +0200
-+++ quota-tools/po/de.po	2014-07-23 22:10:10.236423662 +0200
-@@ -2262,13 +2262,13 @@
+ #: quotacheck_v1.c:32
+ #, c-format
+--- quota-4.09/po/de.po.orig	2022-09-16 13:08:32.000000000 +0200
++++ quota-4.09/po/de.po	2025-04-20 13:26:19.321384306 +0200
+@@ -1391,13 +1391,13 @@ msgstr "Blockgnadenfrist: %s; Inodegnade
  
- #: repquota.c:300
+ #: repquota.c:395
  #, c-format
 -msgid "                        %s limits                File limits\n"
 -msgstr "                        %s Limits                Dateilimits\n"
 +msgid "                       %s limits                File limits\n"
 +msgstr "                       %s Limits                Dateilimits\n"
  
- #: repquota.c:301
+ #: repquota.c:396
  #, c-format
 -msgid "%-9s       used    soft    hard  grace    used  soft  hard  grace\n"
 -msgstr "%-9s       belegt  weich   hart  Gnade   belegt weich hart  Gnade\n"
 +msgid "%-9s        used     soft     hard  grace    used  soft  hard  grace\n"
 +msgstr "%-9s        belegt   weich    hart  Gnade   belegt weich hart  Gnade\n"
  
- #: repquota.c:301
- msgid "User"
+ #: quotacheck_v1.c:32
+ #, c-format
